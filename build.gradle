@@ -1,0 +1,63 @@
+
+plugins {
+    id 'org.springframework.boot' version '2.4.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'com.adarshr.test-logger' version '3.0.0'
+    id 'com.github.spotbugs' version '4.7.1'
+    id 'org.owasp.dependencycheck' version '6.1.6'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.session:spring-session-core'
+    implementation 'org.passay:passay:1.6.0'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.5.8'
+    implementation 'org.springdoc:springdoc-openapi-security:1.5.8'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'io.github.hakky54:logcaptor:2.5.0'
+    spotbugs 'com.github.spotbugs:spotbugs:4.2.3'
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+spotbugsMain {
+    reports{
+        xml {
+            enabled = false
+        }
+        html {
+            enabled = true
+        }
+    }
+}
+
+dependencyCheck {
+    format = 'HTML'
+    analyzers {
+        msbuildEnabled = false
+        assemblyEnabled = false
+        nuspecEnabled = false
+        composerEnabled = false
+        swiftEnabled = false
+        nodeEnabled = false
+    }
+}
