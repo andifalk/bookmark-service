@@ -1,7 +1,5 @@
 package com.example.bookmark.service;
 
-import java.util.UUID;
-
 public class Bookmark {
 
     private String identifier;
@@ -11,7 +9,8 @@ public class Bookmark {
     private String url;
     private String userIdentifier;
 
-    public Bookmark() {}
+    public Bookmark() {
+    }
 
     public Bookmark(String identifier, String name, String description, String category, String url, String userIdentifier) {
         this.identifier = identifier;

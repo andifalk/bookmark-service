@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/bookmarks")
@@ -31,4 +31,25 @@ public class BookmarkRestController {
     List<Bookmark> findAllBookmarks(@RequestParam("userid") String userid) {
         return bookmarkService.findAllBookmarksByUser(userid);
     }
+
+    @Operation(
+            summary = "Creates a new bookmark for given user",
+            tags = {"Bookmark-API"}
+    )
+    @ResponseStatus(CREATED)
+    @PostMapping
+    Bookmark createBookmark(@RequestBody Bookmark bookmark) {
+        return bookmarkService.create(bookmark);
+    }
+
+    @Operation(
+            summary = "Deletes an existing bookmark by its identifier",
+            tags = {"Bookmark-API"}
+    )
+    @ResponseStatus(NO_CONTENT)
+    @DeleteMapping("/{bookmarkId}")
+    void deleteBookmark(@PathVariable("bookmarkId") String bookmarkIdentifier) {
+        bookmarkService.deleteBookmarkEntityByIdentifier(bookmarkIdentifier);
+    }
+
 }

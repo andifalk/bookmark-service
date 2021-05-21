@@ -14,7 +14,8 @@ public class BookmarkEntity extends AbstractPersistable<Long> {
     private String url;
     private String userIdentifier;
 
-    public BookmarkEntity() {}
+    public BookmarkEntity() {
+    }
 
     public BookmarkEntity(String identifier, String name, String description, String category, String url, String userIdentifier) {
         this.identifier = identifier;

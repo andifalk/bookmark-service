@@ -6,10 +6,8 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static javax.persistence.FetchType.EAGER;
 
@@ -34,7 +32,8 @@ public class UserEntity extends AbstractPersistable<Long> {
     @ElementCollection(fetch = EAGER)
     private List<String> roles = new ArrayList<>();
 
-    public UserEntity() {}
+    public UserEntity() {
+    }
 
     public UserEntity(String identifier, String firstName, String lastName, String password, String email, List<String> roles) {
         this.identifier = identifier;

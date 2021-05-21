@@ -4,7 +4,6 @@ import com.example.bookmark.data.BookmarkEntity;
 import com.example.bookmark.data.BookmarkEntityRepository;
 import com.example.bookmark.data.UserEntity;
 import com.example.bookmark.data.UserEntityRepository;
-import com.example.bookmark.service.Bookmark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +22,7 @@ public class DataInitializer implements CommandLineRunner {
     private static final String USERID_BRUCE_BANNER = "938d2a36-9149-40af-be11-2f220cc87ca3";
     private static final String USERID_CLARK_KENT = "46502acd-7d7a-422a-9dc2-1dc5092f8c52";
 
+    private static final String BOOKMARK_ID_EVIL = "4104aec5-3d88-4bc5-8482-b811d51383ac";
     private static final String BOOKMARK_ID_SPRING = "f320a287-ffbd-4826-92e4-217cc6551f4f";
     private static final String BOOKMARK_ID_OWASP = "24c9b408-b7c5-42c1-b4dc-0462afd5eac2";
     private static final String BOOKMARK_ID_IETF = "8e055adf-cf38-426a-be35-0cb118fe8efa";
@@ -67,6 +67,8 @@ public class DataInitializer implements CommandLineRunner {
     private void createBookmarks(Logger log) {
         log.info("Creating some bookmarks...");
         List<BookmarkEntity> bookmarkEntities = Stream.of(
+                new BookmarkEntity(BOOKMARK_ID_EVIL, "Malicious", "Malicious",
+                        "Shopping", "<script>alert(document.cookie)</script>", USERID_BRUCE_WAYNE),
                 new BookmarkEntity(BOOKMARK_ID_AMAZON, "Amazon", "Amazon Shopping",
                         "Shopping", "https://amazon.com", USERID_BRUCE_WAYNE),
                 new BookmarkEntity(BOOKMARK_ID_EBAY, "Ebay", "Ebay Auctions",

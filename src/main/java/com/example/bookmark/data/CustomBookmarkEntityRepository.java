@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public class CustomBookmarkEntityRepository {

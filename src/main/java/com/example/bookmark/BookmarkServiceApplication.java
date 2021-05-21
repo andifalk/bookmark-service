@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import static io.swagger.v3.oas.annotations.enums.SecuritySchemeType.HTTP;
 
 @OpenAPIDefinition(info = @Info(title = "Bookmark-API", version = "1"), security = {@SecurityRequirement(name = "basicAuth")})

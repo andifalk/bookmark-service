@@ -23,7 +23,8 @@ public class User implements UserDetails {
 
     private List<String> roles = new ArrayList<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(String identifier, String firstName, String lastName, String password, String email, List<String> roles) {
         this.identifier = identifier;
