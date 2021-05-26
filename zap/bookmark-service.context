@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <context>
+        <name>http://localhost:9090</name>
+        <desc/>
+        <inscope>true</inscope>
+        <incregexes>http://192.168.178.42:9090.*</incregexes>
+        <tech>
+            <include>Db.HypersonicSQL</include>
+            <include>Language.JSP/Servlet</include>
+            <include>Language.Java</include>
+            <include>Language.JavaScript</include>
+            <include>Language.XML</include>
+            <include>OS</include>
+            <include>OS.Linux</include>
+            <include>OS.MacOS</include>
+            <include>OS.Windows</include>
+            <include>SCM</include>
+            <include>SCM.Git</include>
+            <include>SCM.SVN</include>
+            <include>WS.Tomcat</include>
+            <exclude>Db</exclude>
+            <exclude>Db.CouchDB</exclude>
+            <exclude>Db.Firebird</exclude>
+            <exclude>Db.IBM DB2</exclude>
+            <exclude>Db.Microsoft Access</exclude>
+            <exclude>Db.Microsoft SQL Server</exclude>
+            <exclude>Db.MongoDB</exclude>
+            <exclude>Db.MySQL</exclude>
+            <exclude>Db.Oracle</exclude>
+            <exclude>Db.PostgreSQL</exclude>
+            <exclude>Db.SAP MaxDB</exclude>
+            <exclude>Db.SQLite</exclude>
+            <exclude>Db.Sybase</exclude>
+            <exclude>Language</exclude>
+            <exclude>Language.ASP</exclude>
+            <exclude>Language.C</exclude>
+            <exclude>Language.PHP</exclude>
+            <exclude>Language.Python</exclude>
+            <exclude>Language.Ruby</exclude>
+            <exclude>WS</exclude>
+            <exclude>WS.Apache</exclude>
+            <exclude>WS.IIS</exclude>
+        </tech>
+        <urlparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </urlparser>
+        <postparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </postparser>
+        <authentication>
+            <type>3</type>
+            <strategy>EACH_RESP</strategy>
+            <pollurl/>
+            <polldata/>
+            <pollheaders/>
+            <pollfreq>60</pollfreq>
+            <pollunits>REQUESTS</pollunits>
+            <http>
+                <hostname>localhost</hostname>
+                <realm/>
+                <port>9090</port>
+            </http>
+        </authentication>
+        <users>
+            <user>10;true;QnJ1Y2UgV2F5bmU=;3;YnJ1Y2Uud2F5bmVAZXhhbXBsZS5jb20=~d2F5bmU=~</user>
+        </users>
+        <forceduser>10</forceduser>
+        <session>
+            <type>1</type>
+        </session>
+        <authorization>
+            <type>0</type>
+            <basic>
+                <header/>
+                <body/>
+                <logic>AND</logic>
+                <code>403</code>
+            </basic>
+        </authorization>
+    </context>
+</configuration>

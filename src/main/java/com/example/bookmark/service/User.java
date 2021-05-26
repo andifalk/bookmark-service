@@ -1,5 +1,6 @@
 package com.example.bookmark.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +36,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils.commaSeparatedStringToAuthorityList(roles.stream().map(r -> "ROLE_" + r).collect(Collectors.joining(",")));

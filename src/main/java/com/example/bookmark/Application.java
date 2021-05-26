@@ -19,10 +19,10 @@ import static io.swagger.v3.oas.annotations.enums.SecuritySchemeType.HTTP;
         )
 )
 @SpringBootApplication
-public class BookmarkServiceApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(BookmarkServiceApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }

@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookmarkEntityRepository extends JpaRepository<BookmarkEntity, Long> {
 
-    int deleteBookmarkEntityByIdentifier(String identifier);
+    void deleteBookmarkEntityByIdentifier(String identifier);
 }

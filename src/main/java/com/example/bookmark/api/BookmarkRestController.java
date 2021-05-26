@@ -33,6 +33,17 @@ public class BookmarkRestController {
     }
 
     @Operation(
+            summary = "Searches bookmarks by name",
+            tags = {"Bookmark-API"},
+            parameters = {@Parameter(name = "name", description = "The name of the bookmarks to be searched for", required = true, example = "Ama")}
+    )
+    @ResponseStatus(OK)
+    @GetMapping("/search")
+    List<Bookmark> searchBookmarks(@RequestParam("name") String name) {
+        return bookmarkService.search(name);
+    }
+
+    @Operation(
             summary = "Creates a new bookmark for given user",
             tags = {"Bookmark-API"}
     )

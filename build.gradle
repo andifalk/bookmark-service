@@ -3,7 +3,6 @@ plugins {
     id 'org.springframework.boot' version '2.5.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'com.adarshr.test-logger' version '3.0.0'
     id 'com.github.spotbugs' version '4.7.1'
     id 'org.owasp.dependencycheck' version '6.1.6'
 }
@@ -31,6 +30,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'io.github.hakky54:logcaptor:2.5.0'
+    testImplementation 'com.tngtech.archunit:archunit-junit5:0.18.0'
     spotbugs 'com.github.spotbugs:spotbugs:4.2.3'
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0'
 }
