@@ -4,8 +4,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,19 +12,14 @@ import static javax.persistence.FetchType.EAGER;
 @Entity
 public class UserEntity extends AbstractPersistable<Long> {
 
-    @NotEmpty
     private String identifier;
 
-    @NotEmpty
     private String firstName;
 
-    @NotEmpty
     private String lastName;
 
-    @NotEmpty
     private String password;
 
-    @Email
     private String email;
 
     @ElementCollection(fetch = EAGER)

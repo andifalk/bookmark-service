@@ -16,15 +16,15 @@ public class RestControllerArchitectureTests {
     @ArchTest
     static final ArchRule layer_dependencies_are_respected =
             methods().that().arePublic()
-    .and().areDeclaredInClassesThat()
-          .resideInAPackage("com.example.bookmark.api..")
-    .and().areDeclaredInClassesThat()
-          .haveSimpleNameEndingWith("RestController")
-    .and().areDeclaredInClassesThat()
-          .areAnnotatedWith(RestController.class)
-    .should().beAnnotatedWith(RequestMapping.class)
-    .orShould().beAnnotatedWith(GetMapping.class)
-    .orShould().beAnnotatedWith(PostMapping.class)
-    .orShould().beAnnotatedWith(PutMapping.class)
-    .orShould().beAnnotatedWith(DeleteMapping.class);
+                    .and().areDeclaredInClassesThat()
+                    .resideInAPackage("com.example.bookmark.api..")
+                    .and().areDeclaredInClassesThat()
+                    .haveSimpleNameEndingWith("RestController")
+                    .and().areDeclaredInClassesThat()
+                    .areAnnotatedWith(RestController.class)
+                    .should().beAnnotatedWith(RequestMapping.class)
+                    .orShould().beAnnotatedWith(GetMapping.class)
+                    .orShould().beAnnotatedWith(PostMapping.class)
+                    .orShould().beAnnotatedWith(PutMapping.class)
+                    .orShould().beAnnotatedWith(DeleteMapping.class);
 }

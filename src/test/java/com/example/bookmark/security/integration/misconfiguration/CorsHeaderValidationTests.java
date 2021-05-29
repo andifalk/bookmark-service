@@ -64,7 +64,7 @@ public class CorsHeaderValidationTests {
                 .contentType(APPLICATION_JSON)
                 .header("Origin", VALID_ORIGIN))
                 .andExpect(status().isOk())
-                .andExpect(header().string("Access-Control-Allow-Origin",VALID_ORIGIN))
+                .andExpect(header().string("Access-Control-Allow-Origin", VALID_ORIGIN))
                 .andDo(print());
     }
 

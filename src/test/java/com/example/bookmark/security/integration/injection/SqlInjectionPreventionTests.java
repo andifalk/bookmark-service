@@ -19,47 +19,49 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 class SqlInjectionPreventionTests {
 
-  private static final String SQL_INJECTION_PAYLOAD = "invalid' or 1=1--";
+    private static final String SQL_INJECTION_PAYLOAD = "invalid' or 1=1--";
 
-  @MockBean(name = "springSecurityFilterChain")
-  Filter springSecurityFilterChain;
+    @MockBean(name = "springSecurityFilterChain")
+    Filter springSecurityFilterChain;
 
-  @Autowired private BookmarkService bookmarkService;
-  @Autowired private UserService userService;
+    @Autowired
+    private BookmarkService bookmarkService;
+    @Autowired
+    private UserService userService;
 
-  @Test
-  void verifyChangePassword() {
-    assertThatThrownBy(() -> userService.changePassword(SQL_INJECTION_PAYLOAD, "oldPassword", "newPassword")).hasMessage("No user found for identifier [invalid' or 1=1--]");
-  }
+    @Test
+    void verifyChangePassword() {
+        assertThatThrownBy(() -> userService.changePassword(SQL_INJECTION_PAYLOAD, "oldPassword", "newPassword")).hasMessage("No user found for identifier [invalid' or 1=1--]");
+    }
 
-  @Test
-  void verifyFindUserByIdentifier() {
-    assertThat(userService.findByIdentifier(SQL_INJECTION_PAYLOAD)).isNotPresent();
-  }
+    @Test
+    void verifyFindUserByIdentifier() {
+        assertThat(userService.findByIdentifier(SQL_INJECTION_PAYLOAD)).isNotPresent();
+    }
 
-  @Test
-  void verifyFindUserByEmail() {
-    assertThat(userService.findUserByEmail(SQL_INJECTION_PAYLOAD)).isNotPresent();
-  }
+    @Test
+    void verifyFindUserByEmail() {
+        assertThat(userService.findUserByEmail(SQL_INJECTION_PAYLOAD)).isNotPresent();
+    }
 
-  @Test
-  void verifySearchBookmarks() {
-    assertThat(bookmarkService.search(SQL_INJECTION_PAYLOAD)).isEmpty();
-  }
+    @Test
+    void verifySearchBookmarks() {
+        assertThat(bookmarkService.search(SQL_INJECTION_PAYLOAD)).isEmpty();
+    }
 
-  @Test
-  void verifyFindAllBookmarksByUser() {
-    assertThat(bookmarkService.findAllBookmarksByUser(SQL_INJECTION_PAYLOAD)).isEmpty();
-  }
+    @Test
+    void verifyFindAllBookmarksByUser() {
+        assertThat(bookmarkService.findAllBookmarksByUser(SQL_INJECTION_PAYLOAD)).isEmpty();
+    }
 
-  @Test
-  void verifyFindAllBookmarksByCategory() {
-    assertThat(bookmarkService.findAllBookmarksByCategory(SQL_INJECTION_PAYLOAD)).isEmpty();
-  }
+    @Test
+    void verifyFindAllBookmarksByCategory() {
+        assertThat(bookmarkService.findAllBookmarksByCategory(SQL_INJECTION_PAYLOAD)).isEmpty();
+    }
 
-  @Test
-  void verifyFindBookmarkByIdentifier() {
-    assertThat(bookmarkService.findOneBookmarkByIdentifier(SQL_INJECTION_PAYLOAD)).isNotPresent();
-  }
+    @Test
+    void verifyFindBookmarkByIdentifier() {
+        assertThat(bookmarkService.findOneBookmarkByIdentifier(SQL_INJECTION_PAYLOAD)).isNotPresent();
+    }
 
 }

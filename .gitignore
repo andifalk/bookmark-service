@@ -35,3 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
+/zap/report_xml.xml
+/zap/zap_api_report.html

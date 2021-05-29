@@ -17,11 +17,11 @@ public class TransactionalServiceArchitectureTests {
     @ArchTest
     static final ArchRule all_public_service_operations_are_transactional =
             methods().that().arePublic()
-    .and().areDeclaredInClassesThat()
-          .resideInAPackage("com.example.bookmark.service..")
-    .and().areDeclaredInClassesThat()
-          .haveSimpleNameEndingWith("Service").and().areDeclaredInClassesThat().haveSimpleNameNotContaining("UserDetails")
-    .and().areDeclaredInClassesThat()
-          .areAnnotatedWith(Service.class)
-    .should().beAnnotatedWith(Transactional.class).orShould().beDeclaredInClassesThat().areAnnotatedWith(Transactional.class);
+                    .and().areDeclaredInClassesThat()
+                    .resideInAPackage("com.example.bookmark.service..")
+                    .and().areDeclaredInClassesThat()
+                    .haveSimpleNameEndingWith("Service").and().areDeclaredInClassesThat().haveSimpleNameNotContaining("UserDetails")
+                    .and().areDeclaredInClassesThat()
+                    .areAnnotatedWith(Service.class)
+                    .should().beAnnotatedWith(Transactional.class).orShould().beDeclaredInClassesThat().areAnnotatedWith(Transactional.class);
 }
