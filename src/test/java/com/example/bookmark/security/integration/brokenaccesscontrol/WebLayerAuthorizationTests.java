@@ -1,6 +1,7 @@
 package com.example.bookmark.security.integration.brokenaccesscontrol;
 
 import com.example.bookmark.api.UserRestController;
+import com.example.bookmark.security.annotation.IntegrationTest;
 import com.example.bookmark.service.User;
 import com.example.bookmark.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * 4.1.1 Verify that the application enforces access control rules on a trusted service
  * layer, especially if client-side access control is present and could be bypassed.
  */
+@IntegrationTest
 @DisplayName("V4: Access Control Verification Requirements (Web Layer)")
 @WebMvcTest(UserRestController.class)
 public class WebLayerAuthorizationTests {

@@ -1,5 +1,6 @@
 package com.example.bookmark.security.architecture.general;
 
+import com.example.bookmark.security.annotation.ArchitectureTest;
 import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
@@ -8,6 +9,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
+@ArchitectureTest
 @AnalyzeClasses(packages = {"com.example.bookmark.api", "com.example.bookmark.data", "com.example.bookmark.service"},
         importOptions = {ImportOption.DoNotIncludeTests.class})
 public class LayerDependencyArchitectureTests {

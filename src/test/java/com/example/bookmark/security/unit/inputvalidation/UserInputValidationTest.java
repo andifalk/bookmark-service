@@ -1,5 +1,6 @@
 package com.example.bookmark.security.unit.inputvalidation;
 
+import com.example.bookmark.security.annotation.UnitTest;
 import com.example.bookmark.service.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@UnitTest
 @DisplayName("V5.1 Input Validation Requirements")
 class UserInputValidationTest {
 

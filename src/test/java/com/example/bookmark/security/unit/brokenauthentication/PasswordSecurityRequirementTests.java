@@ -1,5 +1,6 @@
 package com.example.bookmark.security.unit.brokenauthentication;
 
+import com.example.bookmark.security.annotation.UnitTest;
 import com.example.bookmark.service.User;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -19,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Ensure ASVS V2.1 Password Security Requirements are met.
  */
+@UnitTest
 @DisplayName("V2.1 Password Security Requirements")
 @TestMethodOrder(OrderAnnotation.class)
 public class PasswordSecurityRequirementTests {

@@ -1,5 +1,6 @@
 package com.example.bookmark.security.architecture.general;
 
+import com.example.bookmark.security.annotation.ArchitectureTest;
 import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
 
 @SuppressWarnings("unused")
+@ArchitectureTest
 @AnalyzeClasses(packages = "com.example.bookmark.service",
         importOptions = {ImportOption.DoNotIncludeTests.class})
 public class TransactionalServiceArchitectureTests {

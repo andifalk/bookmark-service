@@ -1,5 +1,6 @@
 package com.example.bookmark.security.integration.misconfiguration;
 
+import com.example.bookmark.security.annotation.IntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * strict allow list of trusted domains and subdomains to
  * match against and does not support the "null" origin.
  */
+@IntegrationTest
 @WithMockUser
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @DisplayName("14.5.3 Verify that the CORS Access-Control-AllowOrigin header uses a strict allow list")
