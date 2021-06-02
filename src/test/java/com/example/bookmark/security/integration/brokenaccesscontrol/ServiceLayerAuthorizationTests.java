@@ -1,7 +1,6 @@
 package com.example.bookmark.security.integration.brokenaccesscontrol;
 
 import com.example.bookmark.data.BookmarkEntityRepository;
-import com.example.bookmark.data.UserEntity;
 import com.example.bookmark.data.UserEntityRepository;
 import com.example.bookmark.security.annotation.IntegrationTest;
 import com.example.bookmark.security.util.TestDataUtil;
@@ -15,11 +14,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import javax.servlet.Filter;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 /**
  * 4.1.1 Verify that the application enforces access control rules on a trusted service
@@ -27,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  */
 @IntegrationTest
 @DisplayName("V4: Access Control Verification Requirements (Service Layer)")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(webEnvironment = NONE)
 public class ServiceLayerAuthorizationTests {
 
     @Autowired
@@ -38,6 +35,7 @@ public class ServiceLayerAuthorizationTests {
 
     @Autowired
     private UserEntityRepository userEntityRepository;
+
     @Autowired
     private BookmarkEntityRepository bookmarkEntityRepository;
 
