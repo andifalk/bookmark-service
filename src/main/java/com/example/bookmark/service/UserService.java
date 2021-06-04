@@ -3,6 +3,8 @@ package com.example.bookmark.service;
 import com.example.bookmark.data.CustomUserEntityRepository;
 import com.example.bookmark.data.UserEntity;
 import com.example.bookmark.data.UserEntityRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 public class UserService {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final UserEntityRepository userEntityRepository;
     private final CustomUserEntityRepository customUserEntityRepository;
     private final PasswordEncoder passwordEncoder;
@@ -47,13 +49,15 @@ public class UserService {
 
     @Transactional
     public void changePassword(String userIdentifier, String oldPassword, String newPassword) {
-        userEntityRepository.findOneByIdentifier(userIdentifier).map(
+        UserEntity userEntity = userEntityRepository.findOneByIdentifier(userIdentifier).map(
                 u -> {
                     u.setPassword(passwordEncoder.encode(newPassword));
                     userEntityRepository.save(u);
                     return u;
                 }
         ).orElseThrow(() -> new IllegalArgumentException("No user found for identifier [" + userIdentifier + "]"));
+        LOGGER.info("Successfully change password of user [{}] from [{}] to [{}]",
+                userEntity.getEmail(), oldPassword, newPassword);
     }
 
     public List<User> findAll() {
