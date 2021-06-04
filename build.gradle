@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'jacoco'
     id 'com.github.spotbugs' version '4.7.1'
     id 'org.owasp.dependencycheck' version '6.1.6'
     id 'org.sonarqube' version '3.0'
@@ -38,6 +39,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
 }
 
 spotbugsMain {
@@ -60,5 +62,13 @@ dependencyCheck {
         composerEnabled = false
         swiftEnabled = false
         nodeEnabled = false
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination layout.buildDirectory.dir('jacocoHtml').get().asFile
     }
 }

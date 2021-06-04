@@ -15,7 +15,7 @@ The security tests include the following types:
 * Unit Test Layer
   * Static Code Analysis using SpotBugs & SonarQube (both using the respective Gradle Plugins)
   * OWASP Dependency Check
-  * Security Architecture Tests (ArchUnit)
+  * Security Architecture Tests (using [ArchUnit](https://www.archunit.org/))
   * Input Validation Tests
   * Broken Authentication Tests
 * Integration Test Layer    
@@ -24,3 +24,19 @@ The security tests include the following types:
   * Broken Access Control Tests
 * UI/Workflow Layer
   * Dynamic Security Tests using OWASP Zap
+  
+## Using SonaQube
+
+To use SonarQube for security analysis the easiest way is the provided docker container.
+Just follow the [Getting Started Guide](https://docs.sonarqube.org/latest/setup/get-started-2-minutes/) using the described way using a docker container. Then continue the same guide with _Analyzing a Project_.
+
+After you have configured the project in SonarQube you can trigger the project analysis by issuing the following command:
+
+```
+./gradlew sonarqube \
+  -Dsonar.projectKey=[PROJECT_KEY]
+  -Dsonar.login=[PROJECT_TOKEN]
+```
+
+Please replace _PROJECT_KEY_ and _PROJECT_TOKEN_ with your own values.
+

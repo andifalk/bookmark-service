@@ -17,8 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import javax.servlet.Filter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @IntegrationTest
 @DisplayName("5.3.4 Verify that database queries use parameterized queries or are otherwise protected" +
@@ -78,6 +77,7 @@ class SqlInjectionPreventionTests {
 
     @Test
     void verifyFindBookmarkByIdentifier() {
+        assertThatNoException().isThrownBy(() -> bookmarkService.findOneBookmarkByIdentifier(SQL_INJECTION_PAYLOAD));
         assertThat(bookmarkService.findOneBookmarkByIdentifier(SQL_INJECTION_PAYLOAD)).isNotPresent();
     }
 
