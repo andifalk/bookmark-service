@@ -1,23 +1,21 @@
 package com.example.bookmark.security.integration.injection;
 
 import com.example.bookmark.data.BookmarkEntityRepository;
-import com.example.bookmark.data.UserEntity;
 import com.example.bookmark.data.UserEntityRepository;
 import com.example.bookmark.security.annotation.IntegrationTest;
 import com.example.bookmark.security.util.TestDataUtil;
 import com.example.bookmark.service.BookmarkService;
 import com.example.bookmark.service.UserService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import javax.servlet.Filter;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -44,14 +42,8 @@ class SqlInjectionPreventionTests {
 
     @BeforeEach
     void initTestData() {
-        List<UserEntity> userEntityList = TestDataUtil.createUsers().stream().map(u -> userEntityRepository.save(u)).collect(Collectors.toList());
-        TestDataUtil.createBookmarks().stream().map(b -> bookmarkEntityRepository.save(b)).collect(Collectors.toList());
-    }
-
-    @AfterEach
-    void cleanupTestData() {
-        bookmarkEntityRepository.deleteAll();
-        userEntityRepository.deleteAll();
+        TestDataUtil.createUsers().forEach(u -> userEntityRepository.save(u));
+        TestDataUtil.createBookmarks().forEach(b -> bookmarkEntityRepository.save(b));
     }
 
     @Test
@@ -89,4 +81,9 @@ class SqlInjectionPreventionTests {
         assertThat(bookmarkService.findOneBookmarkByIdentifier(SQL_INJECTION_PAYLOAD)).isNotPresent();
     }
 
+    @AfterEach
+    void cleanupTestData() {
+        bookmarkEntityRepository.deleteAll();
+        userEntityRepository.deleteAll();
+    }
 }

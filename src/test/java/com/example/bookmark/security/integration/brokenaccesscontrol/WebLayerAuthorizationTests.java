@@ -38,12 +38,13 @@ public class WebLayerAuthorizationTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @SuppressWarnings("unused")
     @MockBean
     private UserService userService;
 
     @DisplayName("4.1.1 Verify that the application enforces access control rules")
     @Nested
-    class AuthorizationTests {
+    class RoleAuthorizationTests {
 
         @WithMockUser(roles = "ADMIN")
         @DisplayName("List of users can be accessed be administrative user")

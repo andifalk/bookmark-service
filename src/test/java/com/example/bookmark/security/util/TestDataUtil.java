@@ -1,25 +1,17 @@
 package com.example.bookmark.security.util;
 
 import com.example.bookmark.data.BookmarkEntity;
-import com.example.bookmark.data.BookmarkEntityRepository;
 import com.example.bookmark.data.UserEntity;
-import com.example.bookmark.data.UserEntityRepository;
 import com.example.bookmark.security.MD5PasswordEncoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public final class TestDataUtil {
 
     public static final String USERID_BRUCE_WAYNE = "c9caa4d1-5ad7-4dd1-8bd1-91b8bc5b9a48";
-    private static final String USERID_BRUCE_BANNER = "938d2a36-9149-40af-be11-2f220cc87ca3";
-    private static final String USERID_CLARK_KENT = "46502acd-7d7a-422a-9dc2-1dc5092f8c52";
+    public static final String USERID_BRUCE_BANNER = "938d2a36-9149-40af-be11-2f220cc87ca3";
+    public static final String USERID_CLARK_KENT = "46502acd-7d7a-422a-9dc2-1dc5092f8c52";
 
     private static final String BOOKMARK_ID_EVIL = "4104aec5-3d88-4bc5-8482-b811d51383ac";
     private static final String BOOKMARK_ID_SPRING = "f320a287-ffbd-4826-92e4-217cc6551f4f";
