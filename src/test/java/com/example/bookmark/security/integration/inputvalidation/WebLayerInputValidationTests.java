@@ -2,22 +2,17 @@ package com.example.bookmark.security.integration.inputvalidation;
 
 import com.example.bookmark.api.BookmarkRestController;
 import com.example.bookmark.security.annotation.IntegrationTest;
-import com.example.bookmark.security.util.TestDataUtil;
 import com.example.bookmark.security.util.WithMockBookmarkUser;
-import com.example.bookmark.service.Bookmark;
 import com.example.bookmark.service.BookmarkService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
@@ -26,7 +21,9 @@ import java.util.UUID;
 
 import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_WAYNE;
 import static org.springframework.http.MediaType.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -41,9 +38,6 @@ public class WebLayerInputValidationTests {
     @Autowired
     private MockMvc mvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @SuppressWarnings("unused")
     @MockBean
     private BookmarkService bookmarkService;
@@ -54,24 +48,25 @@ public class WebLayerInputValidationTests {
 
         @WithMockBookmarkUser
         @DisplayName("Verify valid url parameter is accepted")
-        @ValueSource(strings = {"https://example.com", "http://example.com", "http://example.com/subpath", "http://example.com?a=test&b=test"})
+        @ValueSource(strings = {"https://example.com", "http://example.com", "ftp://example.com", "file:///foo/bar.txt",
+                "http://example.com/subpath", "http://example.com?a=test&b=test"})
         @ParameterizedTest
         void verifyValidUrlParameterShouldBeAllowed(String url) throws Exception {
-            Bookmark bookmark = new Bookmark(UUID.randomUUID().toString(), "test", "test", "test", url, USERID_BRUCE_WAYNE);
-            mvc.perform(post("/api/bookmarks").contentType(APPLICATION_JSON).content(objectMapper.writeValueAsString(bookmark)))
-                    .andExpect(status().isCreated());
+            String bookmarkRequestObject = createBookmarkRequestObject(UUID.randomUUID().toString(), "valid", "Valid bookmark", "valid", url);
+            mvc.perform(post("/api/bookmarks").with(csrf()).contentType(APPLICATION_JSON).content(bookmarkRequestObject))
+                    .andExpect(status().isCreated()).andDo(print());
         }
 
         @WithMockBookmarkUser
         @DisplayName("Verify invalid url parameter is denied")
         @NullAndEmptySource
         @ValueSource(strings = {"javascript:<iframe src=\"<alert>document.cookies</alert>\">", "data://somestuff",
-                "ftp://example.com", "myserver", "http://example.com/../etc/passwd", "123"})
+                "jar://example.com", "git://example.com", "myserver", "http://example.com/../etc/passwd", "123"})
         @ParameterizedTest
         void verifyInvalidUrlParameterShouldBeDenied(String url) throws Exception {
-            Bookmark bookmark = new Bookmark(UUID.randomUUID().toString(), "test", "test", "test", url, USERID_BRUCE_WAYNE);
-            mvc.perform(post("/api/bookmarks").contentType(APPLICATION_JSON).content(objectMapper.writeValueAsString(bookmark)))
-                    .andExpect(status().isBadRequest());
+            String bookmarkRequestObject = createBookmarkRequestObject(UUID.randomUUID().toString(), "invalid", "Invalid bookmark", "invalid", url);
+            mvc.perform(post("/api/bookmarks").with(csrf()).contentType(APPLICATION_JSON).content(bookmarkRequestObject))
+                    .andExpect(status().isBadRequest()).andDo(print());
         }
 
         @WithMockBookmarkUser
@@ -79,9 +74,20 @@ public class WebLayerInputValidationTests {
         @ValueSource(strings = {TEXT_HTML_VALUE, APPLICATION_FORM_URLENCODED_VALUE, APPLICATION_PDF_VALUE, IMAGE_PNG_VALUE, "xyz"})
         @ParameterizedTest
         void verifyInvalidContentTypeShouldBeDenied(String contentType) throws Exception {
-            Bookmark bookmark = new Bookmark(UUID.randomUUID().toString(), "test", "test", "test", "http://example.com", USERID_BRUCE_WAYNE);
-            mvc.perform(post("/api/bookmarks").contentType(contentType).content(objectMapper.writeValueAsString(bookmark)))
-                    .andExpect(status().isUnsupportedMediaType());
+            String bookmarkRequestObject = createBookmarkRequestObject(UUID.randomUUID().toString(), "valid", "Valid bookmark", "valie", "https://example.com");
+            mvc.perform(post("/api/bookmarks").with(csrf()).contentType(contentType).content(bookmarkRequestObject))
+                    .andExpect(status().isUnsupportedMediaType()).andDo(print());
         }
+    }
+
+    private String createBookmarkRequestObject(String identifier, String name, String description, String category, String url) {
+        Map<String, Object> valuesMap = new HashMap<>();
+        valuesMap.put("identifier", identifier);
+        valuesMap.put("name", name);
+        valuesMap.put("description", description);
+        valuesMap.put("category", category);
+        valuesMap.put("url", url);
+        valuesMap.put("userIdentifier", USERID_BRUCE_WAYNE);
+        return new JSONObject(valuesMap).toString();
     }
 }

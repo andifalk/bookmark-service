@@ -5,14 +5,18 @@ import com.example.bookmark.service.Bookmark;
 import com.example.bookmark.service.BookmarkService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/bookmarks")
+@Validated
 public class BookmarkRestController {
 
     private final BookmarkService bookmarkService;
@@ -28,8 +32,8 @@ public class BookmarkRestController {
     )
     @ResponseStatus(OK)
     @GetMapping
-    List<Bookmark> findAllBookmarks(@RequestParam("userid") String userid) {
-        return bookmarkService.findAllBookmarksByUser(userid);
+    List<Bookmark> findAllBookmarks(@RequestParam("userIdentifier") UUID userIdentifier) {
+        return bookmarkService.findAllBookmarksByUser(userIdentifier);
     }
 
     @Operation(
@@ -49,7 +53,7 @@ public class BookmarkRestController {
     )
     @ResponseStatus(CREATED)
     @PostMapping
-    Bookmark createBookmark(@RequestBody Bookmark bookmark) {
+    Bookmark createBookmark(@Valid @RequestBody Bookmark bookmark) {
         return bookmarkService.create(bookmark);
     }
 
@@ -59,7 +63,7 @@ public class BookmarkRestController {
     )
     @ResponseStatus(NO_CONTENT)
     @DeleteMapping("/{bookmarkId}")
-    void deleteBookmark(@PathVariable("bookmarkId") String bookmarkIdentifier) {
+    void deleteBookmark(@PathVariable("bookmarkId") UUID bookmarkIdentifier) {
         bookmarkService.deleteBookmarkEntityByIdentifier(bookmarkIdentifier);
     }
 

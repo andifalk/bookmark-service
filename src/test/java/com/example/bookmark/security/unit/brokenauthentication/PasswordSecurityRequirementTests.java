@@ -164,7 +164,7 @@ public class PasswordSecurityRequirementTests {
     private User createUserWithPassword(String password) {
         return
                 new User(
-                        UUID.randomUUID().toString(),
+                        UUID.randomUUID(),
                         "firstname",
                         "lastname",
                         password,

@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
  * A very insecure MD5 password encoder.
  * Please DO NOT use this anywhere in production !!!!!!!!
  */
+@Deprecated
 public class MD5PasswordEncoder implements PasswordEncoder {
 
     private static final Logger LOG = LoggerFactory.getLogger(MD5PasswordEncoder.class);

@@ -1,33 +1,46 @@
 package com.example.bookmark.service;
 
+import com.example.bookmark.validator.ValidPassword;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class User implements UserDetails {
 
-    private String identifier;
+    @NotNull
+    private UUID identifier;
 
+    @NotEmpty
     private String firstName;
 
+    @NotEmpty
     private String lastName;
 
+    @NotEmpty
+    @ValidPassword
     private String password;
 
+    @NotEmpty
+    @Email
     private String email;
 
+    @NotNull
     private List<String> roles = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String identifier, String firstName, String lastName, String password, String email, List<String> roles) {
+    public User(UUID identifier, String firstName, String lastName, String password, String email, List<String> roles) {
         this.identifier = identifier;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,7 +55,7 @@ public class User implements UserDetails {
         return AuthorityUtils.commaSeparatedStringToAuthorityList(roles.stream().map(r -> "ROLE_" + r).collect(Collectors.joining(",")));
     }
 
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(UUID identifier) {
         this.identifier = identifier;
     }
 
@@ -62,7 +75,7 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public String getIdentifier() {
+    public UUID getIdentifier() {
         return identifier;
     }
 

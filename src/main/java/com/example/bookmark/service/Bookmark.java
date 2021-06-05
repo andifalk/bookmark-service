@@ -1,18 +1,35 @@
 package com.example.bookmark.service;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.net.URL;
+import java.util.UUID;
+
 public class Bookmark {
 
-    private String identifier;
+    @NotNull
+    private UUID identifier;
+
+    @NotEmpty
     private String name;
+
+    @Size(max = 500)
     private String description;
+
+    @NotEmpty
     private String category;
-    private String url;
-    private String userIdentifier;
+
+    @NotNull
+    private URL url;
+
+    @NotNull
+    private UUID userIdentifier;
 
     public Bookmark() {
     }
 
-    public Bookmark(String identifier, String name, String description, String category, String url, String userIdentifier) {
+    public Bookmark(UUID identifier, String name, String description, String category, URL url, UUID userIdentifier) {
         this.identifier = identifier;
         this.name = name;
         this.description = description;
@@ -21,11 +38,11 @@ public class Bookmark {
         this.userIdentifier = userIdentifier;
     }
 
-    public String getIdentifier() {
+    public UUID getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(UUID identifier) {
         this.identifier = identifier;
     }
 
@@ -53,19 +70,19 @@ public class Bookmark {
         this.category = category;
     }
 
-    public String getUrl() {
+    public URL getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(URL url) {
         this.url = url;
     }
 
-    public String getUserIdentifier() {
+    public UUID getUserIdentifier() {
         return userIdentifier;
     }
 
-    public void setUserIdentifier(String userIdentifier) {
+    public void setUserIdentifier(UUID userIdentifier) {
         this.userIdentifier = userIdentifier;
     }
 

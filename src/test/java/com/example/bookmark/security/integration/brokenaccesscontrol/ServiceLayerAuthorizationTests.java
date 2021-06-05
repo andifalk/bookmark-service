@@ -16,6 +16,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import javax.servlet.Filter;
 
+import java.net.MalformedURLException;
+import java.util.UUID;
+
 import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_BANNER;
 import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_WAYNE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,7 +50,7 @@ public class ServiceLayerAuthorizationTests {
     private BookmarkEntityRepository bookmarkEntityRepository;
 
     @BeforeEach
-    void initTestData() {
+    void initTestData() throws MalformedURLException {
         TestDataUtil.createUsers().forEach(u -> userEntityRepository.save(u));
         TestDataUtil.createBookmarks().forEach(b -> bookmarkEntityRepository.save(b));
     }
@@ -79,14 +82,14 @@ public class ServiceLayerAuthorizationTests {
         @DisplayName("Bruce Wayne can access his bookmarks")
         @Test
         void verifyBruceWayneCanAccessHisBookmarks() {
-            assertThat(bookmarkService.findAllBookmarksByUser(USERID_BRUCE_WAYNE)).isNotEmpty();
+            assertThat(bookmarkService.findAllBookmarksByUser(UUID.fromString(USERID_BRUCE_WAYNE))).isNotEmpty();
         }
 
         @WithMockBookmarkUser(identifier = USERID_BRUCE_BANNER)
         @DisplayName("Bruce Banner cannot access bookmarks of Bruce Wayne")
         @Test
         void verifyBruceBannerCannotAccessBookmarksOfBruceWayne() {
-            assertThatThrownBy(() -> bookmarkService.findAllBookmarksByUser(USERID_BRUCE_WAYNE))
+            assertThatThrownBy(() -> bookmarkService.findAllBookmarksByUser(UUID.fromString(USERID_BRUCE_WAYNE)))
                     .isInstanceOf(AccessDeniedException.class);
         }
     }

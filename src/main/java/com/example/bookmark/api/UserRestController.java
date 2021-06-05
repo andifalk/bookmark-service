@@ -5,14 +5,17 @@ import com.example.bookmark.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/users")
+@Validated
 public class UserRestController {
 
     private final UserService userService;
@@ -47,7 +50,7 @@ public class UserRestController {
     )
     @ResponseStatus(OK)
     @PostMapping("/{userid}/changepassword")
-    void changePassword(@PathVariable("userid") String userIdentifier, @RequestBody ChangePasswordRequest changePasswordRequest) {
+    void changePassword(@PathVariable("userid") UUID userIdentifier, @RequestBody ChangePasswordRequest changePasswordRequest) {
         userService.changePassword(userIdentifier, changePasswordRequest.getOldPassword(), changePasswordRequest.getNewPassword());
     }
 
@@ -56,7 +59,7 @@ public class UserRestController {
             tags = {"User-API"}
     )
     @GetMapping("/{userid}")
-    ResponseEntity<User> getUser(@PathVariable("userid") String userIdentifier) {
+    ResponseEntity<User> getUser(@PathVariable("userid") UUID userIdentifier) {
         return userService.findByIdentifier(userIdentifier).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
@@ -66,7 +69,7 @@ public class UserRestController {
     )
     @ResponseStatus(NO_CONTENT)
     @DeleteMapping("/{userid}")
-    void deleteUser(@PathVariable("userid") String userIdentifier) {
+    void deleteUser(@PathVariable("userid") UUID userIdentifier) {
         userService.deleteUserByIdentifier(userIdentifier);
     }
 

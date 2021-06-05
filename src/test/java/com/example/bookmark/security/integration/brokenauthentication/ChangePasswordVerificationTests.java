@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.Filter;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_WAYNE;
 import static com.example.bookmark.security.util.TestDataUtil.createUsers;
@@ -47,8 +48,8 @@ public class ChangePasswordVerificationTests {
     @DisplayName("2.1.5 Verify users can change their password")
     @Test
     void verifyChangePasswordSuccess() {
-        userService.changePassword(USERID_BRUCE_WAYNE, "wayne", "new_secret_1122");
-        Optional<User> user = userService.findByIdentifier(USERID_BRUCE_WAYNE);
+        userService.changePassword(UUID.fromString(USERID_BRUCE_WAYNE), "wayne", "new_secret_1122");
+        Optional<User> user = userService.findByIdentifier(UUID.fromString(USERID_BRUCE_WAYNE));
         assertThat(user).isPresent();
         assertThat(user.get().getPassword()).isEqualTo(passwordEncoder.encode("new_secret_1122"));
     }
@@ -57,11 +58,11 @@ public class ChangePasswordVerificationTests {
     @Test
     void verifyChangePasswordFailWrongOldPassword() {
         assertThatThrownBy(() -> userService.changePassword(
-                USERID_BRUCE_WAYNE, "invalid", "new_secret_1122"
+                UUID.fromString(USERID_BRUCE_WAYNE), "invalid", "new_secret_1122"
                 )
         ).isInstanceOf(IllegalArgumentException.class);
 
-        Optional<User> user = userService.findByIdentifier(USERID_BRUCE_WAYNE);
+        Optional<User> user = userService.findByIdentifier(UUID.fromString(USERID_BRUCE_WAYNE));
         assertThat(user).isPresent();
         assertThat(user.get().getPassword()).isEqualTo(passwordEncoder.encode("wayne"));
     }

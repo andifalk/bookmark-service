@@ -3,21 +3,37 @@ package com.example.bookmark.data;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.net.URL;
+import java.util.UUID;
 
 @Entity
 public class BookmarkEntity extends AbstractPersistable<Long> {
 
-    private String identifier;
+    @NotNull
+    private UUID identifier;
+
+    @NotEmpty
     private String name;
+
+    @Size(max = 500)
     private String description;
+
+    @NotEmpty
     private String category;
-    private String url;
-    private String userIdentifier;
+
+    @NotNull
+    private URL url;
+
+    @NotNull
+    private UUID userIdentifier;
 
     public BookmarkEntity() {
     }
 
-    public BookmarkEntity(String identifier, String name, String description, String category, String url, String userIdentifier) {
+    public BookmarkEntity(UUID identifier, String name, String description, String category, URL url, UUID userIdentifier) {
         this.identifier = identifier;
         this.name = name;
         this.description = description;
@@ -26,7 +42,7 @@ public class BookmarkEntity extends AbstractPersistable<Long> {
         this.userIdentifier = userIdentifier;
     }
 
-    public String getIdentifier() {
+    public UUID getIdentifier() {
         return identifier;
     }
 
@@ -42,11 +58,11 @@ public class BookmarkEntity extends AbstractPersistable<Long> {
         return category;
     }
 
-    public String getUrl() {
+    public URL getUrl() {
         return url;
     }
 
-    public String getUserIdentifier() {
+    public UUID getUserIdentifier() {
         return userIdentifier;
     }
 

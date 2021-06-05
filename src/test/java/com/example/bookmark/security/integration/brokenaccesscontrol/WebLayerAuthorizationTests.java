@@ -77,7 +77,7 @@ public class WebLayerAuthorizationTests {
         @DisplayName("User cannot be created without valid CSRF token")
         @Test
         void verifyCreateUserIsForbiddenWithoutCsrfToken() throws Exception {
-            User user = new User(UUID.randomUUID().toString(), "Max", "Test", "12345", "test@example.com", List.of("USER"));
+            User user = new User(UUID.randomUUID(), "Max", "Test", "12345", "test@example.com", List.of("USER"));
             mvc.perform(post("/api/users").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user)))
                     .andExpect(status().isForbidden());
         }
@@ -85,7 +85,7 @@ public class WebLayerAuthorizationTests {
         @DisplayName("User can be created with valid CSRF token")
         @Test
         void verifyCreateUserIsSuccessfulWithCsrfToken() throws Exception {
-            User user = new User(UUID.randomUUID().toString(), "Max", "Test", "12345", "test@example.com", List.of("USER"));
+            User user = new User(UUID.randomUUID(), "Max", "Test", "12345", "test@example.com", List.of("USER"));
             mvc.perform(post("/api/users").with(csrf()).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(user)))
                     .andExpect(status().isCreated());
         }

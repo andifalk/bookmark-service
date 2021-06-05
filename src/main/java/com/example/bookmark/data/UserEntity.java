@@ -1,34 +1,47 @@
 package com.example.bookmark.data;
 
+import com.example.bookmark.validator.ValidPassword;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static javax.persistence.FetchType.EAGER;
 
 @Entity
 public class UserEntity extends AbstractPersistable<Long> {
 
-    private String identifier;
+    @NotNull
+    private UUID identifier;
 
+    @NotEmpty
     private String firstName;
 
+    @NotEmpty
     private String lastName;
 
+    @NotEmpty
+    @ValidPassword
     private String password;
 
+    @NotEmpty
+    @Email
     private String email;
 
+    @NotNull
     @ElementCollection(fetch = EAGER)
     private List<String> roles = new ArrayList<>();
 
     public UserEntity() {
     }
 
-    public UserEntity(String identifier, String firstName, String lastName, String password, String email, List<String> roles) {
+    public UserEntity(UUID identifier, String firstName, String lastName, String password, String email, List<String> roles) {
         this.identifier = identifier;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,7 +50,7 @@ public class UserEntity extends AbstractPersistable<Long> {
         this.roles = roles;
     }
 
-    public String getIdentifier() {
+    public UUID getIdentifier() {
         return identifier;
     }
 

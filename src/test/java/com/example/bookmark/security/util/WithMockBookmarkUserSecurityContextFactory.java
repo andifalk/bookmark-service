@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithSecurityContextFact
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class WithMockBookmarkUserSecurityContextFactory
@@ -25,7 +26,7 @@ public class WithMockBookmarkUserSecurityContextFactory
 
         User libraryUser =
                 new User(
-                        withMockBookmarkUser.identifier(),
+                        UUID.fromString(withMockBookmarkUser.identifier()),
                         withMockBookmarkUser.firstName(),
                         withMockBookmarkUser.lastName(),
                         "n/a",

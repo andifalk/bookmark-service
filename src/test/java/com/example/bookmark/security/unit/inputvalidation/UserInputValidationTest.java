@@ -36,7 +36,7 @@ class UserInputValidationTest {
     class InputValidationTests {
 
         @DisplayName("Verify that valid user names are accepted as expected.")
-        @ValueSource(strings = {"abc@example.com", "123@example.com",
+        @ValueSource(strings = {"abc@example.com", "123@example.com", "test@localhost",
                 "123456789012345678901234567890@example.de", "ab23cd_56jh78@example.com"})
         @ParameterizedTest
         void verifyValidUsernames(String username) {
@@ -48,7 +48,7 @@ class UserInputValidationTest {
         }
 
         @DisplayName("Verify that invalid user names are denied.")
-        @ValueSource(strings = {"12", "aa@", "1 2", "test@abc.", "test@abc", "1234567890123456789012345678901",
+        @ValueSource(strings = {"12", "aa@", "1 2", "test@abc.", "1234567890123456789012345678901",
                 "<javascript>alert('xss')</javascript>", "or 1=1 --", "$%/_12345", "@"})
         @NullAndEmptySource
         @ParameterizedTest
@@ -62,10 +62,10 @@ class UserInputValidationTest {
 
         private User createUser(String username) {
             return new User(
-                    UUID.randomUUID().toString(),
+                    UUID.randomUUID(),
                     "firstname",
                     "lastname",
-                    "My_VerySecurePassw0rd",
+                    "My_VerySecurePssw0rd",
                     username,
                     List.of("USER"));
         }
