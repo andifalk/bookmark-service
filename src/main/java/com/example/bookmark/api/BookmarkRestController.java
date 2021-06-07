@@ -3,8 +3,10 @@ package com.example.bookmark.api;
 import com.example.bookmark.DataInitializer;
 import com.example.bookmark.service.Bookmark;
 import com.example.bookmark.service.BookmarkService;
+import com.example.bookmark.service.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +34,8 @@ public class BookmarkRestController {
     )
     @ResponseStatus(OK)
     @GetMapping
-    List<Bookmark> findAllBookmarks(@RequestParam("userIdentifier") UUID userIdentifier) {
-        return bookmarkService.findAllBookmarksByUser(userIdentifier);
+    List<Bookmark> findAllBookmarks(@RequestParam("userid") UUID userIdentifier, @AuthenticationPrincipal User user) {
+        return bookmarkService.findAllBookmarksByUser(userIdentifier, user);
     }
 
     @Operation(
@@ -43,8 +45,8 @@ public class BookmarkRestController {
     )
     @ResponseStatus(OK)
     @GetMapping("/search")
-    List<Bookmark> searchBookmarks(@RequestParam("name") String name) {
-        return bookmarkService.search(name);
+    List<Bookmark> searchBookmarks(@RequestParam("name") String name, @AuthenticationPrincipal User user) {
+        return bookmarkService.search(name, user.getIdentifier());
     }
 
     @Operation(
@@ -53,8 +55,8 @@ public class BookmarkRestController {
     )
     @ResponseStatus(CREATED)
     @PostMapping
-    Bookmark createBookmark(@Valid @RequestBody Bookmark bookmark) {
-        return bookmarkService.create(bookmark);
+    Bookmark createBookmark(@Valid @RequestBody Bookmark bookmark, @AuthenticationPrincipal User user) {
+        return bookmarkService.create(bookmark, user.getIdentifier());
     }
 
     @Operation(
@@ -63,8 +65,8 @@ public class BookmarkRestController {
     )
     @ResponseStatus(NO_CONTENT)
     @DeleteMapping("/{bookmarkId}")
-    void deleteBookmark(@PathVariable("bookmarkId") UUID bookmarkIdentifier) {
-        bookmarkService.deleteBookmarkEntityByIdentifier(bookmarkIdentifier);
+    void deleteBookmark(@PathVariable("bookmarkId") UUID bookmarkIdentifier, @AuthenticationPrincipal User user) {
+        bookmarkService.deleteBookmarkEntityByIdentifier(bookmarkIdentifier, user.getIdentifier());
     }
 
 }

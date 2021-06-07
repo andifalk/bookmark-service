@@ -55,6 +55,11 @@ public class User implements UserDetails {
         return AuthorityUtils.commaSeparatedStringToAuthorityList(roles.stream().map(r -> "ROLE_" + r).collect(Collectors.joining(",")));
     }
 
+    @JsonIgnore
+    public boolean isAdmin() {
+        return getRoles().contains("ADMIN");
+    }
+
     public void setIdentifier(UUID identifier) {
         this.identifier = identifier;
     }

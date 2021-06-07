@@ -28,7 +28,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable().and()
                 .authorizeRequests()
                 .mvcMatchers("/actuator/health").permitAll()
-                .mvcMatchers(HttpMethod.POST, "/api/users").permitAll()
+                .mvcMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                 .anyRequest().authenticated().and()
                 .httpBasic(withDefaults()).formLogin(withDefaults());
     }

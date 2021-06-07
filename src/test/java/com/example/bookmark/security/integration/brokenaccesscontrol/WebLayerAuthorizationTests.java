@@ -50,7 +50,7 @@ public class WebLayerAuthorizationTests {
         @DisplayName("List of users can be accessed be administrative user")
         @Test
         void verifyFindAllUsersCanBeAccessed() throws Exception {
-            mvc.perform(get("/api/users?userid=12345").contentType(MediaType.APPLICATION_JSON))
+            mvc.perform(get("/api/users").contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());
         }
 
@@ -58,10 +58,9 @@ public class WebLayerAuthorizationTests {
         @DisplayName("List of users cannot be accessed be standard user")
         @Test
         void verifyFindAllUsersIsForbidden() throws Exception {
-            mvc.perform(get("/api/users?userid=12345").contentType(MediaType.APPLICATION_JSON))
+            mvc.perform(get("/api/users").contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
         }
-
     }
 
     @DisplayName("4.2.2 Verify that the application enforces a strong anti-CSRF mechanism")
@@ -74,6 +73,7 @@ public class WebLayerAuthorizationTests {
          * antiCSRF protects unauthenticated functionality
          */
 
+        @WithMockUser
         @DisplayName("User cannot be created without valid CSRF token")
         @Test
         void verifyCreateUserIsForbiddenWithoutCsrfToken() throws Exception {
@@ -82,6 +82,7 @@ public class WebLayerAuthorizationTests {
                     .andExpect(status().isForbidden());
         }
 
+        @WithMockUser
         @DisplayName("User can be created with valid CSRF token")
         @Test
         void verifyCreateUserIsSuccessfulWithCsrfToken() throws Exception {

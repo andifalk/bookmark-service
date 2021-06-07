@@ -2,6 +2,7 @@ package com.example.bookmark.security.util;
 
 import com.example.bookmark.data.BookmarkEntity;
 import com.example.bookmark.data.UserEntity;
+import com.example.bookmark.service.User;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,11 +24,12 @@ public final class TestDataUtil {
     private static final String BOOKMARK_ID_AMAZON = "091878b2-e536-424b-a7b3-1671ac99c3e3";
     private static final String BOOKMARK_ID_EBAY = "9f392d8c-4b2b-408b-8da9-8dca6152a221";
 
+    private static PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
     private TestDataUtil() {
     }
 
     public static List<UserEntity> createUsers() {
-        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         return List.of(
                 new UserEntity(UUID.fromString(USERID_CLARK_KENT), "Clark", "Kent",
                         passwordEncoder.encode("kent"), "clark.kent@example.com",
@@ -56,6 +58,24 @@ public final class TestDataUtil {
                 new BookmarkEntity(UUID.fromString(BOOKMARK_ID_GOOGLE), "Google", "Google Search",
                         "Search", new URL("https://google.com"), UUID.fromString(USERID_CLARK_KENT))
         );
+    }
+
+    public static User createUserBruceWayne() {
+        return new User(UUID.fromString(USERID_BRUCE_WAYNE), "Bruce", "Wayne",
+                passwordEncoder.encode("wayne"), "bruce.wayne@example.com",
+                List.of("USER"));
+    }
+
+    public static User createUserBruceBanner() {
+        return new User(UUID.fromString(USERID_BRUCE_BANNER), "Bruce", "Banner",
+                passwordEncoder.encode("banner"), "bruce.banner@example.com",
+                List.of("USER"));
+    }
+
+    public static User createUserClarkKent() {
+        return new User(UUID.fromString(USERID_CLARK_KENT), "Clark", "Kent",
+                passwordEncoder.encode("kent"), "clark.kent@example.com",
+                List.of("USER", "ADMIN"));
     }
 
 }

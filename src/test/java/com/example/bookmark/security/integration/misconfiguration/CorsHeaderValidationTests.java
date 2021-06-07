@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * match against and does not support the "null" origin.
  */
 @IntegrationTest
-@WithMockUser
+@WithMockUser(roles = "ADMIN")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @DisplayName("14.5.3 Verify that the CORS Access-Control-AllowOrigin header uses a strict allow list")
 public class CorsHeaderValidationTests {

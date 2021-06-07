@@ -1,6 +1,5 @@
 package com.example.bookmark.data;
 
-import com.example.bookmark.service.Bookmark;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -9,13 +8,13 @@ import java.util.UUID;
 
 public interface BookmarkEntityRepository extends JpaRepository<BookmarkEntity, Long> {
 
-    Optional<BookmarkEntity> findOneBookmarkByIdentifier(UUID identifier);
+    Optional<BookmarkEntity> findOneBookmarkByIdentifierAndUserIdentifier(UUID identifier, UUID userIdentifier);
 
-    void deleteBookmarkEntityByIdentifier(UUID identifier);
+    void deleteBookmarkEntityByIdentifierAndUserIdentifier(UUID identifier, UUID userIdentifier);
 
     List<BookmarkEntity> findAllBookmarksByUserIdentifier(UUID userIdentifier);
 
-    List<BookmarkEntity> findAllBookmarksByCategory(String category);
+    List<BookmarkEntity> findAllBookmarksByCategoryAndUserIdentifier(String category, UUID userIdentifier);
 
-    List<BookmarkEntity> findAllBookmarksByName(String name);
+    List<BookmarkEntity> findAllBookmarksByNameAndUserIdentifier(String name, UUID userIdentifier);
 }

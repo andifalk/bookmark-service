@@ -26,16 +26,18 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> findUserByEmail(String email) {
+    Optional<User> findUserByEmail(String email) {
         return userEntityRepository.findUserByEmail(email).map(this::toUser);
     }
 
+    @PreAuthorize("isAuthenticated()")
     public Optional<User> findByIdentifier(UUID userIdentifier) {
         return userEntityRepository.findOneByIdentifier(userIdentifier).map(
                 this::toUser
         );
     }
 
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     public User createUser(User user) {
         if (user.getIdentifier() == null) {
@@ -45,6 +47,7 @@ public class UserService {
         return toUser(userEntityRepository.save(toUserEntity(user)));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     public void changePassword(UUID userIdentifier, String oldPassword, String newPassword) {
         UserEntity userEntity = userEntityRepository.findOneByIdentifier(userIdentifier).map(
@@ -75,6 +78,7 @@ public class UserService {
                 u.getPassword(), u.getEmail(), u.getRoles());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
     public void deleteUserByIdentifier(UUID userIdentifier) {
         userEntityRepository.deleteByIdentifier(userIdentifier);

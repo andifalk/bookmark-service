@@ -6,6 +6,7 @@ import com.example.bookmark.security.annotation.IntegrationTest;
 import com.example.bookmark.security.util.TestDataUtil;
 import com.example.bookmark.security.util.WithMockBookmarkUser;
 import com.example.bookmark.service.BookmarkService;
+import com.example.bookmark.service.User;
 import com.example.bookmark.service.UserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,7 @@ import javax.servlet.Filter;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
-import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_BANNER;
-import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_WAYNE;
+import static com.example.bookmark.security.util.TestDataUtil.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
@@ -78,18 +78,27 @@ public class ServiceLayerAuthorizationTests {
     @Nested
     class ObjectAuthorizationTests {
 
-        @WithMockBookmarkUser
+        @WithMockUser
         @DisplayName("Bruce Wayne can access his bookmarks")
         @Test
         void verifyBruceWayneCanAccessHisBookmarks() {
-            assertThat(bookmarkService.findAllBookmarksByUser(UUID.fromString(USERID_BRUCE_WAYNE))).isNotEmpty();
+            User bruceWayne = createUserBruceWayne();
+            assertThat(bookmarkService.findAllBookmarksByUser(bruceWayne.getIdentifier(), bruceWayne)).isNotEmpty();
         }
 
-        @WithMockBookmarkUser(identifier = USERID_BRUCE_BANNER)
+        @WithMockUser
+        @DisplayName("Clark Kent as Admin can access bookmarks of Bruce Wayne")
+        @Test
+        void verifyClarkKentAsAdminCanAccessHisBookmarks() {
+            assertThat(bookmarkService.findAllBookmarksByUser(createUserBruceWayne().getIdentifier(), createUserClarkKent())).isNotEmpty();
+        }
+
+        @WithMockUser
         @DisplayName("Bruce Banner cannot access bookmarks of Bruce Wayne")
         @Test
         void verifyBruceBannerCannotAccessBookmarksOfBruceWayne() {
-            assertThatThrownBy(() -> bookmarkService.findAllBookmarksByUser(UUID.fromString(USERID_BRUCE_WAYNE)))
+            assertThatThrownBy(() -> bookmarkService.findAllBookmarksByUser(
+                    createUserBruceWayne().getIdentifier(), createUserBruceBanner()))
                     .isInstanceOf(AccessDeniedException.class);
         }
     }

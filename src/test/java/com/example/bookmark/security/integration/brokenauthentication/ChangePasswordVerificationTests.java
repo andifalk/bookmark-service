@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import javax.servlet.Filter;
 import java.util.Optional;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
+@WithMockUser
 @IntegrationTest
 @DisplayName("V2.1 Password Security Requirements")
 @SpringBootTest(webEnvironment = NONE)
@@ -51,7 +53,7 @@ public class ChangePasswordVerificationTests {
         userService.changePassword(UUID.fromString(USERID_BRUCE_WAYNE), "wayne", "new_secret_1122");
         Optional<User> user = userService.findByIdentifier(UUID.fromString(USERID_BRUCE_WAYNE));
         assertThat(user).isPresent();
-        assertThat(user.get().getPassword()).isEqualTo(passwordEncoder.encode("new_secret_1122"));
+        assertThat(passwordEncoder.matches("new_secret_1122", user.get().getPassword())).isTrue();
     }
 
     @DisplayName("2.1.6 Verify that password change requires the user's current and new password")
@@ -64,7 +66,7 @@ public class ChangePasswordVerificationTests {
 
         Optional<User> user = userService.findByIdentifier(UUID.fromString(USERID_BRUCE_WAYNE));
         assertThat(user).isPresent();
-        assertThat(user.get().getPassword()).isEqualTo(passwordEncoder.encode("wayne"));
+        assertThat(passwordEncoder.matches("wayne", user.get().getPassword())).isTrue();
     }
 
     @AfterEach
