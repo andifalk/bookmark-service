@@ -48,7 +48,7 @@ public class WebLayerInputValidationTests {
 
         @WithMockBookmarkUser
         @DisplayName("Verify valid url parameter is accepted")
-        @ValueSource(strings = {"https://example.com", "http://example.com", "ftp://example.com", "file:///foo/bar.txt",
+        @ValueSource(strings = {"https://example.com", "http://example.com", "ftp://example.com",
                 "http://example.com/subpath", "http://example.com?a=test&b=test"})
         @ParameterizedTest
         void verifyValidUrlParameterShouldBeAllowed(String url) throws Exception {
@@ -61,7 +61,7 @@ public class WebLayerInputValidationTests {
         @DisplayName("Verify invalid url parameter is denied")
         @NullAndEmptySource
         @ValueSource(strings = {"javascript:<iframe src=\"<alert>document.cookies</alert>\">", "data://somestuff",
-                "jar://example.com", "git://example.com", "myserver", "http://example.com/../etc/passwd", "123"})
+                "jar://example.com", "git://example.com", "myserver", "file:///foo/bar.txt", "123"})
         @ParameterizedTest
         void verifyInvalidUrlParameterShouldBeDenied(String url) throws Exception {
             String bookmarkRequestObject = createBookmarkRequestObject(UUID.randomUUID().toString(), "invalid", "Invalid bookmark", "invalid", url);

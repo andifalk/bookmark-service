@@ -2,6 +2,7 @@ package com.example.bookmark.security.unit.inputvalidation;
 
 import com.example.bookmark.security.annotation.UnitTest;
 import com.example.bookmark.service.User;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressFBWarnings("SIC_INNER_SHOULD_BE_STATIC")
 @UnitTest
 @DisplayName("V5.1 Input Validation Requirements")
 class UserInputValidationTest {

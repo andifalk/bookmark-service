@@ -52,11 +52,14 @@ public class UserService {
     public void changePassword(UUID userIdentifier, String oldPassword, String newPassword) {
         UserEntity userEntity = userEntityRepository.findOneByIdentifier(userIdentifier).map(
                 u -> {
+                    if (!passwordEncoder.matches(oldPassword, u.getPassword())) {
+                        throw new IllegalArgumentException("User and/or password is not valid");
+                    }
                     u.setPassword(passwordEncoder.encode(newPassword));
                     userEntityRepository.save(u);
                     return u;
                 }
-        ).orElseThrow(() -> new IllegalArgumentException("No user found for identifier [" + userIdentifier + "]"));
+        ).orElseThrow(() -> new IllegalArgumentException("User and/or password is not valid"));
         LOGGER.info("Successfully change password of user [{}] from [{}] to [{}]",
                 userEntity.getEmail(), oldPassword, newPassword);
     }
