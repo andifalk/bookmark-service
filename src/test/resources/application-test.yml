@@ -1,0 +1,13 @@
+server:
+  error:
+    include-binding-errors: always
+    include-exception: true
+    include-message: always
+    include-stacktrace: always
+logging:
+  level:
+    org:
+      springframework:
+        transaction:
+          support: debug
+        security: debug

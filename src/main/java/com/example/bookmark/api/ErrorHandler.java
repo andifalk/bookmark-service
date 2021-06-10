@@ -1,5 +1,6 @@
 package com.example.bookmark.api;
 
+import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +19,11 @@ public class ErrorHandler {
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<String> handle(IllegalStateException ex) {
         return ResponseEntity.status(PRECONDITION_FAILED).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(FileUploadException.class)
+    public ResponseEntity<String> handle(FileUploadException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
 }

@@ -90,8 +90,8 @@ public class BookmarkRestController {
     )
     @ResponseStatus(OK)
     @PostMapping("/upload")
-    void uploadBookmarks(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal User user) {
-        bookmarkService.importBookmarks(file, user);
+    List<Bookmark> uploadBookmarks(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal User user) {
+        return bookmarkService.importBookmarks(file, user);
     }
 
 

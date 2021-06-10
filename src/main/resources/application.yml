@@ -1,5 +1,10 @@
 server:
   port: 9090
+  error:
+    include-binding-errors: never
+    include-exception: false
+    include-message: never
+    include-stacktrace: never
 spring:
   application:
     name: bookmark-service
@@ -9,7 +14,10 @@ spring:
       username: "sa"
   jpa:
     open-in-view: false
-
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
 logging:
   level:
     org:

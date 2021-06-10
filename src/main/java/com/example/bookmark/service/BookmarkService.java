@@ -5,6 +5,10 @@ import com.example.bookmark.data.BookmarkEntityRepository;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.tika.detect.Detector;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -16,12 +20,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.apache.tika.config.TikaConfig;
 
 @Service
 @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 @Transactional(readOnly = true)
 public class BookmarkService {
     private final BookmarkEntityRepository bookmarkEntityRepository;
+    private final Detector detector = TikaConfig.getDefaultConfig().getDetector();
 
     public BookmarkService(BookmarkEntityRepository bookmarkEntityRepository) {
         this.bookmarkEntityRepository = bookmarkEntityRepository;
@@ -69,9 +75,20 @@ public class BookmarkService {
                 .map(this::toBookmark).collect(Collectors.toList());
     }
 
+    @Transactional
     public List<Bookmark> importBookmarks(MultipartFile file, User user) {
+        TikaInputStream tikaInputStream = null;
+        try {
+            tikaInputStream = TikaInputStream.get(file.getInputStream());
+            MediaType baseType = detector.detect(tikaInputStream, new Metadata()).getBaseType();
+            if (!baseType.toString().equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
+                throw new IllegalArgumentException("Wrong file type");
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException("Error handling upload file: " + ex.getMessage());
+        }
         List<Bookmark> bookmarks = new ArrayList<>();
-        try (InputStream in = file.getInputStream()) {
+        try (InputStream in = tikaInputStream) {
             XSSFWorkbook workbook = new XSSFWorkbook(in);
             XSSFSheet sheet = workbook.getSheetAt(0);
             Row row;
