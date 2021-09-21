@@ -24,7 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.session:spring-session-core'
-    implementation 'org.passay:passay:1.6.0'
+    implementation 'org.passay:passay:1.6.1'
     implementation 'org.springdoc:springdoc-openapi-ui:1.5.10'
     implementation 'org.springdoc:springdoc-openapi-security:1.5.10'
     implementation 'com.google.common.html.types:types:1.0.8'
