@@ -27,7 +27,6 @@ public class UserEntity extends AbstractPersistable<Long> {
     private String lastName;
 
     @NotEmpty
-    @ValidPassword
     private String password;
 
     @NotEmpty
