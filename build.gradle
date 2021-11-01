@@ -27,6 +27,7 @@ dependencies {
     implementation 'org.passay:passay:1.6.1'
     implementation 'org.springdoc:springdoc-openapi-ui:1.5.10'
     implementation 'org.springdoc:springdoc-openapi-security:1.5.10'
+    implementation 'commons-fileupload:commons-fileupload:1.4'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -35,6 +36,9 @@ dependencies {
     testImplementation 'com.tngtech.archunit:archunit-junit5:0.21.0'
     spotbugs 'com.github.spotbugs:spotbugs:4.4.1'
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0'
+    testImplementation 'com.github.spotbugs:spotbugs-annotations:4.4.1'
+    implementation 'org.apache.poi:poi:5.0.0'
+    implementation 'org.apache.poi:poi-ooxml:5.0.0'
 }
 
 test {

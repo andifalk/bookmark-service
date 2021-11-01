@@ -2,17 +2,22 @@ package com.example.bookmark.service;
 
 import com.example.bookmark.data.BookmarkEntity;
 import com.example.bookmark.data.BookmarkEntityRepository;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.example.bookmark.data.CustomBookmarkEntityRepository;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,6 +83,39 @@ public class BookmarkService {
                 return bookmarks;
             }
         });
+    }
+
+    @Transactional
+    public List<Bookmark> importBookmarks(MultipartFile file) {
+        List<Bookmark> bookmarks = new ArrayList<>();
+        try (InputStream in = file.getInputStream()) {
+            XSSFWorkbook workbook = new XSSFWorkbook(in);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            Row row;
+            Iterator<Row> rowIterator = sheet.rowIterator();
+            Bookmark bookmark;
+            while (rowIterator.hasNext()) {
+                row = rowIterator.next();
+                if (row.getRowNum() == 0) {
+                    continue;
+                }
+                bookmark = new Bookmark();
+                bookmark.setIdentifier(UUID.randomUUID().toString());
+                bookmark.setName(row.getCell(0).getStringCellValue());
+                bookmark.setDescription(row.getCell(1).getStringCellValue());
+                bookmark.setCategory(row.getCell(2).getStringCellValue());
+                bookmark.setUrl(row.getCell(3).getStringCellValue());
+                bookmark.setUserIdentifier(row.getCell(4).getStringCellValue());
+                bookmarks.add(bookmark);
+            }
+            return bookmarks.stream()
+                    .map(this::toEntity)
+                    .map(bookmarkEntityRepository::save)
+                    .map(this::toBookmark)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     private Bookmark toBookmark(BookmarkEntity b) {

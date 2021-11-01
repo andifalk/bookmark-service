@@ -6,6 +6,7 @@ import com.example.bookmark.service.BookmarkService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -62,5 +63,16 @@ public class BookmarkRestController {
     void deleteBookmark(@PathVariable("bookmarkId") String bookmarkIdentifier) {
         bookmarkService.deleteBookmarkEntityByIdentifier(bookmarkIdentifier);
     }
+
+    @Operation(
+            summary = "Uploads bookmarks inside an excel sheet",
+            tags = {"Bookmark-API"}
+    )
+    @ResponseStatus(OK)
+    @PostMapping("/upload")
+    List<Bookmark> uploadBookmarks(@RequestParam("file") MultipartFile file) {
+        return bookmarkService.importBookmarks(file);
+    }
+
 
 }
