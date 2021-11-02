@@ -8,6 +8,28 @@ An insecure spring boot based java service providing an API to store and retriev
 
 * __jwt__ branch (planned): Another secure variant (same as in __secure__ branch but replacing basic authentication/form login with JWT based authentication & authorization)
 
+## REST API
+
+This application provides a basic bookmark administration (like in your web browsers).
+
+You may ask for bookmarks of user Bruce Wayne like this:
+
+```
+http :9090/api/bookmarks?userid=c9caa4d1-5ad7-4dd1-8bd1-91b8bc5b9a48 --auth bruce.wayne@example.com:wayne
+```
+
+You could also just try to access bookmarks of another user (which is actually broken authz):
+
+```
+http :9090/api/bookmarks?userid=c9caa4d1-5ad7-4dd1-8bd1-91b8bc5b9a48 --auth bruce.banner@example.com:banner
+```
+
+Or just ask for the complete list of users (which you usually should not provide to all users!!!)
+
+```
+http :9090/api/users --auth bruce.wayne@example.com:wayne
+```
+
 ## Security Tests
 
 The security tests include the following types:
