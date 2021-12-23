@@ -1,11 +1,11 @@
 
 plugins {
-    id 'org.springframework.boot' version '2.5.6'
+    id 'org.springframework.boot' version '2.6.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'jacoco'
-    id 'com.github.spotbugs' version '4.7.6'
-    id 'org.owasp.dependencycheck' version '6.3.1'
+    id 'com.github.spotbugs' version '5.0.3'
+    id 'org.owasp.dependencycheck' version '6.5.1'
     id 'org.sonarqube' version '3.3'
 }
 
@@ -25,8 +25,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.session:spring-session-core'
     implementation 'org.passay:passay:1.6.1'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.5.10'
-    implementation 'org.springdoc:springdoc-openapi-security:1.5.10'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.2'
+    implementation 'org.springdoc:springdoc-openapi-security:1.6.2'
     implementation 'com.google.common.html.types:types:1.0.8'
     implementation 'org.apache.tika:tika-parsers:1.27'
     implementation 'commons-fileupload:commons-fileupload:1.4'
@@ -34,11 +34,11 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'io.github.hakky54:logcaptor:2.5.0'
-    testImplementation 'com.tngtech.archunit:archunit-junit5:0.21.0'
-    spotbugs 'com.github.spotbugs:spotbugs:4.4.1'
+    testImplementation 'io.github.hakky54:logcaptor:2.7.4'
+    testImplementation 'com.tngtech.archunit:archunit-junit5-engine:0.22.0'
+    spotbugs 'com.github.spotbugs:spotbugs:4.5.2'
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0'
-    testImplementation 'com.github.spotbugs:spotbugs-annotations:4.4.1'
+    testImplementation 'com.github.spotbugs:spotbugs-annotations:4.5.2'
     implementation 'org.apache.poi:poi:5.0.0'
     implementation 'org.apache.poi:poi-ooxml:5.0.0'
 }
