@@ -1,6 +1,6 @@
 
 plugins {
-    id 'org.springframework.boot' version '2.6.2'
+    id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'jacoco'
@@ -25,18 +25,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.session:spring-session-core'
     implementation 'org.passay:passay:1.6.1'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.2'
-    implementation 'org.springdoc:springdoc-openapi-security:1.6.2'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.3'
+    implementation 'org.springdoc:springdoc-openapi-security:1.6.3'
     implementation 'commons-fileupload:commons-fileupload:1.4'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'io.github.hakky54:logcaptor:2.7.4'
+    testImplementation 'io.github.hakky54:logcaptor:2.7.7'
     testImplementation 'com.tngtech.archunit:archunit-junit5-engine:0.22.0'
-    spotbugs 'com.github.spotbugs:spotbugs:4.5.2'
+    spotbugs 'com.github.spotbugs:spotbugs:4.5.3'
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0'
-    testImplementation 'com.github.spotbugs:spotbugs-annotations:4.5.2'
+    testImplementation 'com.github.spotbugs:spotbugs-annotations:4.5.3'
     implementation 'org.apache.poi:poi:5.0.0'
     implementation 'org.apache.poi:poi-ooxml:5.0.0'
 }
@@ -58,7 +58,7 @@ spotbugsMain {
 }
 
 dependencyCheck {
-    format = 'HTML'
+    format = 'ALL'
     analyzers {
         msbuildEnabled = false
         assemblyEnabled = false
