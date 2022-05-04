@@ -5,6 +5,7 @@ server:
     include-exception: false
     include-message: never
     include-stacktrace: never
+
 spring:
   application:
     name: bookmark-service
