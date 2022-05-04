@@ -1,5 +1,6 @@
 server:
   port: 9090
+
 spring:
   application:
     name: bookmark-service
