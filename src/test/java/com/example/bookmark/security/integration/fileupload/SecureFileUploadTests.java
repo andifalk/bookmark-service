@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.UUID;
 
 import static com.example.bookmark.security.util.TestDataUtil.*;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA;
@@ -106,7 +108,7 @@ public class SecureFileUploadTests {
                             "application/pdf",
                             resource.getInputStream()
                     )).contentType(MULTIPART_FORM_DATA).with(csrf()))
-                    .andExpect(status().isBadRequest()).andDo(print());
+                    .andExpect(status().isBadRequest()).andExpect(status().reason(not(startsWith("No valid entries or contents found")))).andDo(print());
         }
     }
 
@@ -115,10 +117,10 @@ public class SecureFileUploadTests {
     class FileIntegrityRequirements {
 
         @WithMockBookmarkUser
-        @DisplayName("Bruce Wayne can upload new bookmarks")
+        @DisplayName("12.2.1 Verify that files obtained from untrusted sources are validated to be of expected type based on the file's content")
         @Test
-        void verifyBookmarksCanBeAccessed() throws Exception {
-            ClassPathResource resource = new ClassPathResource("upload/bookmarks.xlsx");
+        void verifyInvalidFileTypeUpload() throws Exception {
+            ClassPathResource resource = new ClassPathResource("upload/invalid_type.xlsx");
             mvc.perform(multipart("/api/bookmarks/upload")
                     .file(new MockMultipartFile(
                             "file",
@@ -126,28 +128,7 @@ public class SecureFileUploadTests {
                             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                             resource.getInputStream()
                     )).contentType(MULTIPART_FORM_DATA).with(csrf()))
-                    .andExpect(status().isOk()).andDo(print());
-        }
-
-    }
-
-    @DisplayName("V12.3 File Execution Requirements")
-    @Nested
-    class FileExecutionRequirements {
-
-        @WithMockBookmarkUser
-        @DisplayName("Bruce Wayne can upload new bookmarks")
-        @Test
-        void verifyBookmarksCanBeAccessed() throws Exception {
-            ClassPathResource resource = new ClassPathResource("upload/bookmarks.xlsx");
-            mvc.perform(multipart("/api/bookmarks/upload")
-                    .file(new MockMultipartFile(
-                            "file",
-                            "bookmarks.xlsx",
-                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                            resource.getInputStream()
-                    )).contentType(MULTIPART_FORM_DATA).with(csrf()))
-                    .andExpect(status().isOk()).andDo(print());
+                    .andExpect(status().isBadRequest()).andExpect(status().reason(not(startsWith("No valid entries or contents found")))).andDo(print());
         }
 
     }

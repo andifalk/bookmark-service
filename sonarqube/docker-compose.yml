@@ -2,9 +2,11 @@ version: "3"
 
 services:
   sonarqube:
-    image: sonarqube:community
+    #image: sonarqube:community
+    image: mwizner/sonarqube:9.4.0-community
     depends_on:
       - db
+      - init
     environment:
       SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonar
       SONAR_JDBC_USERNAME: sonar
@@ -23,7 +25,13 @@ services:
     volumes:
       - postgresql:/var/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
-
+  init:
+    image: bash
+    privileged: true
+    user: root
+    volumes:
+      - /Users/afa/Development/localgit/bookmark-service/sonarqube/init.sh:/mnt/init.sh
+    command: ["sh", "-e", "/mnt/init.sh"]
 volumes:
   sonarqube_data:
   sonarqube_extensions:
