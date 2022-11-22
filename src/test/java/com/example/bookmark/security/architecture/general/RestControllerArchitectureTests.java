@@ -28,5 +28,5 @@ public class RestControllerArchitectureTests {
                     .orShould().beAnnotatedWith(GetMapping.class)
                     .orShould().beAnnotatedWith(PostMapping.class)
                     .orShould().beAnnotatedWith(PutMapping.class)
-                    .orShould().beAnnotatedWith(DeleteMapping.class);
+                    .orShould().beAnnotatedWith(DeleteMapping.class).allowEmptyShould(true);
 }
