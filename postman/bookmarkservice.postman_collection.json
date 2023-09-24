@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "3ac51973-f695-4cb9-8e94-ff61d2bac839",
+		"name": "BookmarkService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7267364"
+	},
+	"item": [
+		{
+			"name": "OpenAPI",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/v3/api-docs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"v3",
+						"api-docs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Bookmarks for user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/bookmarks?userid=46502acd-7d7a-422a-9dc2-1dc5092f8c52",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"bookmarks"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "46502acd-7d7a-422a-9dc2-1dc5092f8c52"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Bookmarks By Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/bookmarks/search?name=' or 1=1--",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"bookmarks",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "' or 1=1--"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Bookmark",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/bookmarks/58d7dfdf-6dc9-4c96-976d-7b0a8e62b696",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"bookmarks",
+						"58d7dfdf-6dc9-4c96-976d-7b0a8e62b696"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Bookmark",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/bookmarks/58d7dfdf-6dc9-4c96-976d-7b0a8e62b694",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"bookmarks",
+						"58d7dfdf-6dc9-4c96-976d-7b0a8e62b694"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Max\",\n    \"lastName\": \"Muster\",\n    \"password\": \"test\",\n    \"email\": \"max.muster@example.com\",\n    \"roles\": [\n        \"USER\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change User Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"oldPassword\": \"secret\",\n    \"newPassword\": \"newPassword\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/users/46502acd-7d7a-422a-9dc2-1dc5092f8c52/changepassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"users",
+						"46502acd-7d7a-422a-9dc2-1dc5092f8c52",
+						"changepassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/users/46502acd-7d7a-422a-9dc2-1dc5092f8c52",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"users",
+						"46502acd-7d7a-422a-9dc2-1dc5092f8c52"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/users/46502acd-7d7a-422a-9dc2-1dc5092f8c52",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"users",
+						"46502acd-7d7a-422a-9dc2-1dc5092f8c52"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bookmark",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n    \"title\": \"haveibeenpwned.com\",\n    \"description\": \"Have <b>I</b> been pwned!\",\n    \"reference\": \"javascript:alert('xss')\",\n    \"userId\": \"cf8f12f5-0acd-4239-a291-350c815cee35\"\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/bookmarks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"bookmarks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Bookmarks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/afa/Development/localgit/bookmark-service/src/main/resources/upload/bookmarks_macro.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/bookmarks/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"bookmarks",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "kent",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "clark.kent@example.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

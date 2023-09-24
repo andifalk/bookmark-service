@@ -44,8 +44,18 @@ The security tests include the following types:
   * Broken Access Control Tests
 * UI/Workflow Layer
   * Dynamic Security Tests using OWASP Zap
+
+### Static application security testing
+
+#### SemGrep
+
+To check the project with the OSS semgrep scanner just perform this command inside the project root folder:
+
+```shell
+semgrep scan --config auto
+```
   
-## Using SonaQube
+#### SonarQube
 
 To use SonarQube for security analysis the easiest way is the provided docker container.
 Just follow the [Getting Started Guide](https://docs.sonarqube.org/latest/setup/get-started-2-minutes/) using the described way using a docker container. Then continue the same guide with _Analyzing a Project_.
@@ -53,9 +63,10 @@ Just follow the [Getting Started Guide](https://docs.sonarqube.org/latest/setup/
 After you have configured the project in SonarQube you can trigger the project analysis by issuing the following command:
 
 ```
-./gradlew sonarqube \
-  -Dsonar.projectKey=[PROJECT_KEY]
-  -Dsonar.login=[PROJECT_TOKEN]
+./mvnw sonar:sonar -Dsonar.projectKey=PROJECT_KEY 
+                             -Dsonar.projectName='PROJECT_NAME' 
+                             -Dsonar.host.url=http://localhost:9000 
+                             -Dsonar.token=THE_GENERATED_TOKEN  
 ```
 
 Please replace _PROJECT_KEY_ and _PROJECT_TOKEN_ with your own values.

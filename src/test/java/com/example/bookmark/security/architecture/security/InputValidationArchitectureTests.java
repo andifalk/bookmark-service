@@ -17,6 +17,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.fields;
 /**
  * 1.5.3 Verify that input validation is enforced on a trusted service layer.
  */
+@SuppressWarnings("unused")
 @AnalyzeClasses(packages = {"com.example.bookmark.api", "com.example.bookmark.data", "com.example.bookmark.service"},
         importOptions = {ImportOption.DoNotIncludeTests.class})
 public class InputValidationArchitectureTests {

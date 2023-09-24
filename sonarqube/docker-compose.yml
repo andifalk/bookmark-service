@@ -2,8 +2,8 @@ version: "3"
 
 services:
   sonarqube:
-    #image: sonarqube:community
-    image: mwizner/sonarqube:9.4.0-community
+    image: sonarqube:10.2.1-community
+    #image: mwizner/sonarqube:9.4.0-community
     depends_on:
       - db
       - init
