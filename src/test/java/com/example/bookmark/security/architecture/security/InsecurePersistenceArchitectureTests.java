@@ -7,6 +7,7 @@ import com.tngtech.archunit.lang.ArchRule;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
+@SuppressWarnings("unused")
 @AnalyzeClasses(packages = {"com.example.bookmark.api", "com.example.bookmark.data", "com.example.bookmark.service"},
         importOptions = {ImportOption.DoNotIncludeTests.class})
 public class InsecurePersistenceArchitectureTests {

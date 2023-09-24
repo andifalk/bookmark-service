@@ -15,7 +15,7 @@ import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 public class LayeredArchitectureTests {
 
     @ArchTest
-    static final ArchRule layer_dependencies_are_respected = layeredArchitecture()
+    static final ArchRule layer_dependencies_are_respected = layeredArchitecture().consideringAllDependencies()
 
             .layer("Controllers").definedBy("com.example.bookmark.api..")
             .layer("Services").definedBy("com.example.bookmark.service..")
