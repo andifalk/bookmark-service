@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -27,7 +27,7 @@ class SqlInjectionPreventionTests {
 
     private static final String SQL_INJECTION_PAYLOAD = "invalid' or 1=1--";
 
-    @MockBean(name = "springSecurityFilterChain")
+    @MockBean(name = "securityFilterChain")
     Filter springSecurityFilterChain;
 
     @Autowired

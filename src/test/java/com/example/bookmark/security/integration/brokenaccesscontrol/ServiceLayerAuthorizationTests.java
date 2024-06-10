@@ -14,7 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 
 import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_BANNER;
 import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_WAYNE;
@@ -31,7 +31,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = NONE)
 public class ServiceLayerAuthorizationTests {
 
-    @MockBean(name = "springSecurityFilterChain")
+    @MockBean(name = "securityFilterChain")
     Filter springSecurityFilterChain;
 
     @Autowired

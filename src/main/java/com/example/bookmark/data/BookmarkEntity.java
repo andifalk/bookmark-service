@@ -2,7 +2,7 @@ package com.example.bookmark.data;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 @Entity
 public class BookmarkEntity extends AbstractPersistable<Long> {

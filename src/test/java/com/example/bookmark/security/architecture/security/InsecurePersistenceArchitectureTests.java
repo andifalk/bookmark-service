@@ -16,11 +16,11 @@ public class InsecurePersistenceArchitectureTests {
     static final ArchRule no_api_or_service_should_directly_access_low_level_persistence_services =
             classes().that().resideInAnyPackage("..api..", "..service..")
                     .should().onlyAccessClassesThat().resideOutsideOfPackages(
-                    "java.sql..", "javax.persistence..", "org.springframework.data..", "org.hibernate..");
+                    "java.sql..", "jakarta.persistence..", "org.springframework.data..", "org.hibernate..");
 
     @ArchTest
     static final ArchRule no_data_layer_should_directly_access_insecure_persistence_services =
             classes().that().resideInAPackage("..data..")
                     .should().onlyAccessClassesThat().resideOutsideOfPackages(
-                    "java.sql..", "javax.persistence..", "org.hibernate..");
+                    "java.sql..", "jakarta.persistence..", "org.hibernate..");
 }

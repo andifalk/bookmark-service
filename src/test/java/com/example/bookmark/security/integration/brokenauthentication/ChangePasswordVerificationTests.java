@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 import java.util.Optional;
 
 import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_WAYNE;
@@ -25,10 +25,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @IntegrationTest
 @DisplayName("V2.1 Password Security Requirements")
 @SpringBootTest(webEnvironment = NONE)
-public class ChangePasswordVerificationTests {
+class ChangePasswordVerificationTests {
 
-    @MockBean(name = "springSecurityFilterChain")
-    Filter springSecurityFilterChain;
+    @MockBean(name = "securityFilterChain")
+    Filter apiSecurityFilterChain;
 
     @Autowired
     private UserService userService;

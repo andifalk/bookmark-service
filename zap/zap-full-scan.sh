@@ -1,4 +1,4 @@
-docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py \
+docker run -v $(pwd):/zap/wrk/:rw -t zaproxy/zap-stable zap-full-scan.py \
 -t http://192.168.178.42:9090/api \
 -n /zap/wrk/bookmark-service.context \
 -U 'Bruce Wayne' \

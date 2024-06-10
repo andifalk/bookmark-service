@@ -2,13 +2,14 @@ package com.example.bookmark.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.codec.Utf8;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * A very insecure MD5 password encoder.
@@ -22,7 +23,7 @@ public class MD5PasswordEncoder implements PasswordEncoder {
     public String encode(CharSequence rawPassword) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            return (new HexBinaryAdapter()).marshal(md.digest(rawPassword.toString().getBytes(StandardCharsets.UTF_8)));
+            return new String(Hex.encode(md.digest(rawPassword.toString().getBytes(UTF_8))));
         } catch (NoSuchAlgorithmException e) {
             LOG.warn("Error in encoding", e);
             return null;
@@ -33,7 +34,7 @@ public class MD5PasswordEncoder implements PasswordEncoder {
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            String rawPasswordEncoded = (new HexBinaryAdapter()).marshal(md.digest(rawPassword.toString().getBytes(StandardCharsets.UTF_8)));
+            String rawPasswordEncoded = new String(Hex.encode(md.digest(rawPassword.toString().getBytes(UTF_8))));
             return digestEquals(encodedPassword, rawPasswordEncoded);
         } catch (NoSuchAlgorithmException e) {
             LOG.warn("Error in matching", e);

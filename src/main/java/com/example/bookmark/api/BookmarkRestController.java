@@ -5,6 +5,7 @@ import com.example.bookmark.service.Bookmark;
 import com.example.bookmark.service.BookmarkService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,17 @@ public class BookmarkRestController {
     @GetMapping
     List<Bookmark> findAllBookmarks(@RequestParam("userid") String userid) {
         return bookmarkService.findAllBookmarksByUser(userid);
+    }
+
+    @Operation(
+            summary = "Retrieves bookmark with given id for given user",
+            tags = {"Bookmark-API"},
+            parameters = {@Parameter(name = "userid", description = "The identifier of the user", required = true, example = DataInitializer.USERID_BRUCE_WAYNE)}
+    )
+    @ResponseStatus(OK)
+    @GetMapping("/{id}")
+    ResponseEntity<Bookmark> findBookmarkWithId(@PathVariable("id") String id) {
+        return bookmarkService.findOneBookmarkByIdentifier(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(

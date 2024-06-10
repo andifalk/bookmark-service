@@ -2,12 +2,12 @@ package com.example.bookmark.data;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.FetchType.EAGER;
+import static jakarta.persistence.FetchType.EAGER;
 
 @Entity
 public class UserEntity extends AbstractPersistable<Long> {

@@ -18,3 +18,8 @@ logging:
         transaction:
           support: debug
         security: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
