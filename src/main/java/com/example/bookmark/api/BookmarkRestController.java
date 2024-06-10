@@ -4,17 +4,17 @@ import com.example.bookmark.DataInitializer;
 import com.example.bookmark.service.Bookmark;
 import com.example.bookmark.service.BookmarkService;
 import com.example.bookmark.service.User;
-import com.google.common.escape.Escaper;
 import com.google.common.html.types.SafeUrl;
 import com.google.common.html.types.SafeUrls;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -42,6 +42,17 @@ public class BookmarkRestController {
     @GetMapping
     List<Bookmark> findAllBookmarks(@RequestParam("userid") UUID userIdentifier, @AuthenticationPrincipal User user) {
         return bookmarkService.findAllBookmarksByUser(userIdentifier, user);
+    }
+
+    @Operation(
+            summary = "Retrieves bookmark with given id for given user",
+            tags = {"Bookmark-API"},
+            parameters = {@Parameter(name = "userid", description = "The identifier of the user", required = true, example = DataInitializer.USERID_BRUCE_WAYNE)}
+    )
+    @ResponseStatus(OK)
+    @GetMapping("/{id}")
+    ResponseEntity<Bookmark> findBookmarkWithId(@PathVariable("id") UUID id, @AuthenticationPrincipal User user) {
+        return bookmarkService.findOneBookmarkByIdentifier(id, user.getIdentifier()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @Operation(

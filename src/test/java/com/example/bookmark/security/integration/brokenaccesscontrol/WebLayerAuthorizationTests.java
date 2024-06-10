@@ -1,6 +1,7 @@
 package com.example.bookmark.security.integration.brokenaccesscontrol;
 
 import com.example.bookmark.api.UserRestController;
+import com.example.bookmark.config.MethodSecurityConfiguration;
 import com.example.bookmark.security.annotation.IntegrationTest;
 import com.example.bookmark.service.User;
 import com.example.bookmark.service.UserService;
@@ -11,7 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 @DisplayName("V4: Access Control Verification Requirements (Web Layer)")
 @WebMvcTest(UserRestController.class)
+@Import(MethodSecurityConfiguration.class)
 public class WebLayerAuthorizationTests {
 
     @Autowired

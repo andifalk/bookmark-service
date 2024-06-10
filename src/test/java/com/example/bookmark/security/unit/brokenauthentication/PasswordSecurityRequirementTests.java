@@ -7,15 +7,16 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Ensure ASVS V2.1 Password Security Requirements are met.
@@ -104,6 +105,22 @@ public class PasswordSecurityRequirementTests {
         assertThat(user.getPassword()).isEqualTo(password);
     }
 
+    @DisplayName("2.1.5 Verify users can change their password")
+    @Order(5)
+    @Disabled("Can only be tested in integration test")
+    @Test
+    void verifyUsersCanChangePassword() {
+        assertTrue(true, "Can only be tested in integration test");
+    }
+
+    @DisplayName("2.1.6 Verify password change requires the user's current and new password")
+    @Order(6)
+    @Disabled("Can only be tested in integration test")
+    @Test
+    void verifyPasswordChangeRequiresOldAndNewPassword() {
+        assertTrue(true, "Can only be tested in integration test");
+    }
+
     @DisplayName("2.1.7 Verify that passwords are checked against a set of breached passwords")
     @Order(7)
     @ParameterizedTest
@@ -114,6 +131,14 @@ public class PasswordSecurityRequirementTests {
         assertThat(violations).hasSize(1);
         assertThat(violations.iterator().next().getMessage()).contains(
                 "Password contains the dictionary word");
+    }
+
+    @DisplayName("2.1.8 Verify that a password strength meter is provided")
+    @Order(8)
+    @Disabled("This should be tested on the frontend")
+    @Test
+    void verifyPasswordsStrengthMeterIsProvided() {
+        assertTrue(true, "This should be tested on the frontend");
     }
 
     @DisplayName("2.1.9 Verify that there are no password composition rules limiting the type" +
@@ -127,6 +152,32 @@ public class PasswordSecurityRequirementTests {
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         assertThat(violations).isEmpty();
         assertThat(user.getPassword()).isEqualTo(password);
+    }
+
+    @DisplayName("2.1.10 Verify that there are no periodic credential rotation or password history requirements.")
+    @Order(10)
+    @Disabled("This should be tested in an integration test")
+    @Test
+    void verifyNoPeriodicCredentialRotationIsRequired() {
+        assertTrue(true, "This should be tested on the frontend");
+    }
+
+    @DisplayName("2.1.11 Verify that \"paste\" functionality, browser password helpers, and " +
+            "external password managers are permitted.")
+    @Order(11)
+    @Disabled("This should be tested in frontend")
+    @Test
+    void verifyPasteFunctionalityIsPermitted() {
+        assertTrue(true, "This should be tested on the frontend");
+    }
+
+    @DisplayName("2.1.12 Verify that the user can choose to either temporarily view the entire" +
+            "masked password, or temporarily view the last typed character of the password")
+    @Order(12)
+    @Disabled("This should be tested in frontend")
+    @Test
+    void verifyTemporaryViewPassword() {
+        assertTrue(true, "This should be tested on the frontend");
     }
 
     private User createUserWithPassword(String password) {

@@ -1,13 +1,17 @@
 package com.example.bookmark.config;
 
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -16,25 +20,23 @@ import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@EnableWebSecurity
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+@Configuration
+@EnableWebSecurity(debug = true)
+public class WebSecurityConfiguration {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                //.csrf().disable()
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
-                .headers().frameOptions().disable().and()
-                .authorizeRequests()
-                .mvcMatchers("/actuator/health").permitAll()
-                .mvcMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
-                .anyRequest().authenticated().and()
+                .headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+                .authorizeHttpRequests(r -> {
+                    r.requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll();
+                    r.requestMatchers("/", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
+                    r.anyRequest().authenticated();
+                })
                 .httpBasic(withDefaults()).formLogin(withDefaults());
-    }
-
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring().mvcMatchers("/", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**");
+        return http.build();
     }
 
     @Bean

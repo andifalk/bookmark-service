@@ -7,6 +7,7 @@ import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
+import static com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices;
 
 @SuppressWarnings("unused")
 @ArchitectureTest
@@ -24,4 +25,9 @@ public class LayeredArchitectureTests {
             .whereLayer("Controllers").mayNotBeAccessedByAnyLayer()
             .whereLayer("Services").mayOnlyBeAccessedByLayers("Controllers")
             .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Services");
+
+    @ArchTest
+    static final ArchRule no_cycles_between_slices =
+            slices().matching("..(com.example.bookmark).(*)..").namingSlices("$2 of $1").should().beFreeOfCycles();
+
 }

@@ -15,12 +15,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import javax.servlet.Filter;
+import jakarta.servlet.Filter;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
 import static com.example.bookmark.security.util.TestDataUtil.USERID_BRUCE_WAYNE;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
 @WithMockUser
@@ -32,7 +32,7 @@ class SqlInjectionPreventionTests {
 
     private static final String SQL_INJECTION_PAYLOAD = "invalid' or 1=1--";
 
-    @MockBean(name = "springSecurityFilterChain")
+    @MockBean(name = "securityFilterChain")
     Filter springSecurityFilterChain;
 
     @Autowired
@@ -51,6 +51,11 @@ class SqlInjectionPreventionTests {
     }
 
     @Test
+    void verifyChangePassword() {
+        assertThatThrownBy(() -> userService.changePassword(UUID.randomUUID(), SQL_INJECTION_PAYLOAD, "newPassword")).hasMessage("User and/or password is not valid");
+    }
+
+    @Test
     void verifyFindUserByIdentifier() {
         assertThat(userService.findByIdentifier(UUID.randomUUID())).isNotPresent();
     }
@@ -64,6 +69,14 @@ class SqlInjectionPreventionTests {
     void verifyFindAllBookmarksByCategory() {
         assertThat(bookmarkService.findAllBookmarksByCategory(SQL_INJECTION_PAYLOAD, UUID.fromString(USERID_BRUCE_WAYNE))).isEmpty();
     }
+
+    // Not testable any more due to strong UUID type
+    /*
+    @Test
+    void verifyFindBookmarkByIdentifier() {
+        assertThatNoException().isThrownBy(() -> bookmarkService.findOneBookmarkByIdentifier(SQL_INJECTION_PAYLOAD));
+        assertThat(bookmarkService.findOneBookmarkByIdentifier(SQL_INJECTION_PAYLOAD)).isNotPresent();
+    }*/
 
     @AfterEach
     void cleanupTestData() {

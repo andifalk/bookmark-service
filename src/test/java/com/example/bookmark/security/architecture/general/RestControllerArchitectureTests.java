@@ -17,7 +17,7 @@ public class RestControllerArchitectureTests {
 
     @ArchTest
     static final ArchRule layer_dependencies_are_respected =
-            methods().that().arePublic()
+            methods().that().arePublic().or().arePackagePrivate()
                     .and().areDeclaredInClassesThat()
                     .resideInAPackage("com.example.bookmark.api..")
                     .and().areDeclaredInClassesThat()

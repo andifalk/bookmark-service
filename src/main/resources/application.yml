@@ -19,6 +19,7 @@ spring:
     multipart:
       max-file-size: 1MB
       max-request-size: 1MB
+
 logging:
   level:
     org:
@@ -26,3 +27,8 @@ logging:
         transaction:
           support: debug
         security: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

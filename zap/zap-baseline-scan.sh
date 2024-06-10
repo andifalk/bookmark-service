@@ -1,5 +1,5 @@
-docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py \
--t http://192.168.178.42:9090 \
+docker run -v $(pwd):/zap/wrk/:rw -t zaproxy/zap-stable zap-baseline.py \
+-t http://172.16.177.199:9090 \
 -z "-configfile /zap/wrk/options.prop" \
 -g config.prop \
 -r zap_baseline_report.html

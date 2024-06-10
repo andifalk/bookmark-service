@@ -34,7 +34,7 @@ public class LayerDependencyArchitectureTests {
             classes().that().resideInAPackage("..service..")
                     .should().onlyAccessClassesThat().resideInAnyPackage(
                     "..service..", "..data..", "..validator..", "java..",
-                    "javax..", "org..");
+                    "jakarta..", "org..");
 
     // 'dependOn' catches a wider variety of violations, e.g. having fields of type, having method parameters of type, extending type ...
 
@@ -57,6 +57,6 @@ public class LayerDependencyArchitectureTests {
     static final ArchRule services_should_only_depend_on_persistence_or_other_services =
             classes().that().resideInAPackage("..service..")
                     .should().onlyDependOnClassesThat().resideInAnyPackage(
-                            "..service..", "..data..", "..validator..", "java..", "javax..", "org..", "com..");
+                            "..service..", "..data..", "..validator..", "java..", "jakarta..", "org..", "com..");
 
 }
