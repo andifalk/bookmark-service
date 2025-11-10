@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(./mvnw:*)",
+      "Bash(git:*)"
+    ],
+    "deny": []
+  }
+}
