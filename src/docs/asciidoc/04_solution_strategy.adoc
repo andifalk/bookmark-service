@@ -1,0 +1,31 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-solution-strategy]]
+== Solution Strategy
+
+The architecture follows a pragmatic layered monolith strategy focused on demonstrable security behavior.
+
+[options="header",cols="1,3"]
+|===
+|Decision Area |Strategy
+
+|System decomposition
+|Single deployable Spring Boot application with package-based layers: `api` (web), `service` (business), `data` (persistence).
+
+|Persistence
+|Use Spring Data JPA repositories for standard CRUD and custom native SQL repositories for selected queries.
+
+|Security
+|Centralize HTTP security in `WebSecurityConfiguration`; use authenticated endpoints with public access only for root, OpenAPI docs, Swagger and actuator endpoints.
+
+|API style
+|Expose REST endpoints with JSON payloads and use `@RestControllerAdvice` for exception to HTTP mapping.
+
+|Documentation
+|Generate OpenAPI docs at runtime and arc42 PDF during Maven build.
+
+|Quality assurance
+|Use architecture tests (ArchUnit), unit/integration security tests, static analysis and dependency checks as continuous feedback.
+|===
+
+This strategy intentionally keeps deployment simple and code structure explicit so that security properties and violations are easy to detect and discuss.

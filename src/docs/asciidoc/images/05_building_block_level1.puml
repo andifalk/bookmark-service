@@ -1,0 +1,17 @@
+@startuml
+top to bottom direction
+skinparam componentStyle rectangle
+
+package "Bookmark Service" {
+  [API Layer\ncom.example.bookmark.api] as api
+  [Service Layer\ncom.example.bookmark.service] as service
+  [Data Layer\ncom.example.bookmark.data] as data
+  [Security Config\ncom.example.bookmark.config/security] as sec
+  [Bootstrap\nApplication + DataInitializer] as boot
+}
+
+api --> service
+service --> data
+sec --> service : UserDetailsService
+boot --> data : seed demo data
+@enduml

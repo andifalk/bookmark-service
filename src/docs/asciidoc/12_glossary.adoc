@@ -1,0 +1,39 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-glossary]]
+== Glossary
+
+[cols="e,2e" options="header"]
+|===
+|Term |Definition
+
+|Bookmark Service
+|Spring Boot application in this repository that manages bookmarks and users.
+
+|Bookmark
+|Domain object with identifier, name, description, category, URL and owning user identifier.
+
+|User
+|Authenticated principal and domain user record with roles.
+
+|API Layer
+|Package `com.example.bookmark.api`; REST controllers and exception handler.
+
+|Service Layer
+|Package `com.example.bookmark.service`; transactional use case implementation and model mapping.
+
+|Data Layer
+|Package `com.example.bookmark.data`; JPA entities and repositories.
+
+|ArchUnit
+|Test library used to assert architecture constraints (layering, dependencies, security annotations).
+
+|OWASP ASVS
+|Application Security Verification Standard used as reference for security checks in tests.
+
+|OpenAPI
+|Machine-readable API description exposed under `/v3/api-docs` and visualized by Swagger UI.
+
+|arc42
+|Template and structure used for this architecture documentation.
+|===

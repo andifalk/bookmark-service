@@ -1,0 +1,58 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-quality-scenarios]]
+== Quality Requirements
+
+=== Quality Requirements Overview
+
+[options="header",cols="1,2"]
+|===
+|Quality Attribute |Requirement
+
+|Security Verifiability
+|Security-related behavior is covered by executable architecture/unit/integration tests and can be validated automatically.
+
+|Maintainability
+|Layer violations and cyclic dependencies are detected by ArchUnit tests during test execution.
+
+|Reliability
+|Application handles invalid input and file upload errors with controlled HTTP responses.
+
+|Usability (Developer)
+|API contract is discoverable through OpenAPI and Swagger UI.
+
+|Portability
+|Project runs on local machines and CI without external infrastructure due to in-memory database.
+|===
+
+=== Quality Scenarios
+
+[options="header",cols="1,1,1,2"]
+|===
+|ID |Source/Stimulus |Environment |Acceptance Criteria
+
+|QS-SEC-01
+|Developer runs integration security test suite
+|Local build / CI
+|Tests complete successfully and expose expected insecure/secure behavior for the branch.
+
+|QS-MAINT-01
+|A developer introduces forbidden layer dependency
+|During `mvn test`
+|Architecture tests fail and report violating class/package dependency.
+
+|QS-REL-01
+|Client sends malformed business input
+|Runtime API call
+|Service returns deterministic 4xx response via `ErrorHandler` without process crash.
+
+|QS-PERF-01
+|Client requests bookmarks for one demo user
+|Local runtime with seeded data
+|Response is returned within 500 ms on a typical developer machine.
+
+|QS-CHANGE-01
+|Architect updates arc42 content
+|During `mvn generate-resources`
+|Exactly one consolidated PDF (`target/generated-docs/architecture.pdf`) is generated.
+|===

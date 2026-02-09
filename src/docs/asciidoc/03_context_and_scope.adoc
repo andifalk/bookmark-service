@@ -1,0 +1,63 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-context-and-scope]]
+== Context and Scope
+
+=== Business Context
+
+The Bookmark Service is a server-side system that stores and retrieves bookmarks and user data.
+
+plantuml::images/03_context_diagram.puml[format=svg,align=center]
+
+[options="header",cols="1,2,2"]
+|===
+|Communication Partner |Input to Bookmark Service |Output from Bookmark Service
+
+|Browser / API Client
+|HTTP requests to REST endpoints, credentials (Basic Auth / form login), JSON payloads, multipart uploads
+|JSON responses, HTTP status codes, error messages
+
+|Security Test Suite
+|Automated calls for authentication, authorization, validation, upload and injection scenarios
+|Pass/fail results via assertions against response and behavior
+
+|Developers / Reviewers
+|Code changes, local runs, security scans
+|Architecture PDF, test reports, generated OpenAPI docs
+|===
+
+=== Technical Context
+
+plantuml::images/03_context_diagram.puml[format=svg,align=center]
+
+[options="header",cols="1,2,2"]
+|===
+|Interface / Channel |Protocol / Technology |Purpose
+
+|REST API
+|HTTP/JSON on port `9090`
+|Bookmark and user management operations.
+
+|Authentication
+|Spring Security (HTTP Basic + form login)
+|Protect application endpoints (`anyRequest().authenticated()`).
+
+|Database Access
+|Spring Data JPA + Hibernate + JDBC to H2 in-memory DB
+|Read/write `UserEntity` and `BookmarkEntity`.
+
+|API Documentation
+|OpenAPI endpoint `/v3/api-docs`, Swagger UI `/swagger-ui.html`
+|Interactive API exploration.
+
+|Operations
+|Spring Boot Actuator web endpoints
+|Operational visibility (configured as exposed).
+|===
+
+Mapping business interactions to channels:
+
+* Bookmark and user CRUD: REST API over HTTP.
+* Login and request authentication: Spring Security filters over HTTP.
+* Data persistence: JPA/Hibernate over JDBC.
+* Security verification: test code invoking service or MVC layer.

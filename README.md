@@ -71,3 +71,22 @@ After you have configured the project in SonarQube you can trigger the project a
 
 Please replace _PROJECT_KEY_ and _PROJECT_TOKEN_ with your own values.
 
+## Architecture documentation
+
+This project includes architecture documentation based on Arc42 and is completely created by AI (OpenAI Codex Agent) using the following prompt:
+
+```bash
+› you are an architect and have to create the architecture documentation for this project. You find already the arc42 templates in folder 'src/docs/asciidoc'. The
+asciidoc files each contain help sections. Please fill in the corresponding contents in the files for this project. Also generate corresponding diagrams in plantuml
+format.
+
+
+• I’ll draft the full arc42 content for this codebase and replace the template help text with project-specific documentation, then add matching PlantUML diagrams in
+src/docs/asciidoc. I’m first scanning the code and current docs structure to derive the actual architecture.
+
+• Explored
+└ List main
+List asciidoc
+List ls -la
+
+```

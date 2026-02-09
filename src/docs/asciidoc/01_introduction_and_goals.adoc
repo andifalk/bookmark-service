@@ -1,0 +1,84 @@
+ifndef::imagesdir[:imagesdir: ./images]
+
+[[section-introduction-and-goals]]
+== Introduction and Goals
+
+The Bookmark Service is a Spring Boot based REST application to manage browser bookmarks for users.
+It is intentionally implemented in an insecure variant (main branch) and used as a training and verification target for security tests based on OWASP Top 10 and OWASP ASVS.
+
+=== Requirements Overview
+
+The system provides the following core capabilities:
+
+* authenticate users via HTTP Basic authentication and form login,
+* list, create, search and delete bookmarks,
+* upload bookmarks from an Excel file,
+* list, create, read and delete users,
+* change passwords,
+* expose OpenAPI documentation and Swagger UI,
+* expose actuator endpoints for operational visibility.
+
+Main API endpoints:
+
+* `GET /api/bookmarks?userid=...`
+* `GET /api/bookmarks/{id}`
+* `GET /api/bookmarks/search?name=...`
+* `POST /api/bookmarks`
+* `DELETE /api/bookmarks/{bookmarkId}`
+* `POST /api/bookmarks/upload`
+* `GET /api/users`, `GET /api/users/{userid}`, `GET /api/users/me`
+* `POST /api/users`, `POST /api/users/{userid}/changepassword`, `DELETE /api/users/{userid}`
+
+=== Quality Goals
+
+[options="header",cols="1,2,3"]
+|===
+|Priority |Quality Goal |Concrete Scenario
+
+|1
+|Security testability and demonstrability
+|For each selected security concern (e.g. broken access control, injection, weak authentication), the codebase can be validated by executable unit/integration/architecture tests and shows expected behavior on the insecure branch.
+
+|2
+|Understandability for training and reviews
+|A developer can understand request flow from controller to persistence in less than 30 minutes using package structure (`api`, `service`, `data`) and architecture documentation.
+
+|3
+|Fast local execution
+|A contributor can start the service and run tests locally without external infrastructure; startup uses in-memory H2 and requires only JDK 21 and Maven.
+
+|4
+|Maintainability
+|Architecture rules (ArchUnit) detect layer and dependency violations early in CI/local runs.
+
+|5
+|API usability
+|Consumers can inspect and try endpoints via generated OpenAPI/Swagger UI on a running instance.
+|===
+
+=== Stakeholders
+
+[options="header",cols="1,2,2"]
+|===
+|Role/Name|Contact|Expectations
+
+|Developers
+|Project repository contributors
+|Clear layered structure, easy local setup, and predictable build/test behavior.
+
+|Security Engineers / Trainers
+|Security chapter maintainers
+|A realistic insecure sample application with reproducible vulnerabilities and tests.
+
+|Architecture Reviewers
+|Internal reviewers / code owners
+|Traceable architectural decisions, known constraints, and explicit technical debt.
+
+|API Consumers (demo/test clients)
+|Developers using REST endpoints
+|Stable endpoint contracts and straightforward authentication behavior.
+
+|DevOps / Build Maintainers
+|CI maintainers
+|Deterministic Maven build, generated architecture PDF, and no mandatory external services.
+|===

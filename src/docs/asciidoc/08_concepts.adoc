@@ -1,0 +1,43 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-concepts]]
+== Cross-cutting Concepts
+
+=== Layered Architecture Enforcement
+
+The codebase uses package-level layering (`api`, `service`, `data`) and validates it with ArchUnit tests:
+
+* no service dependency on controller layer,
+* no persistence dependency on service layer,
+* no cycles between major slices.
+
+This creates a continuously checked architecture boundary.
+
+=== Security by Configuration and Tests
+
+Security concerns are represented in two ways:
+
+* centralized web security configuration (`WebSecurityConfiguration`),
+* executable security tests (architecture, unit and integration).
+
+plantuml::images/08_security_auth_flow.puml[format=svg,align=center]
+
+=== Transaction and Persistence Concept
+
+Service methods define transactional boundaries using `@Transactional` (default read-only on class level, write on mutating methods). Persistence uses:
+
+* Spring Data JPA repositories for standard operations,
+* custom repositories with native queries for specific lookups,
+* entity-to-API model mapping in service layer.
+
+=== Error Handling Concept
+
+`ErrorHandler` (`@RestControllerAdvice`) converts selected exceptions to HTTP responses:
+
+* `IllegalArgumentException` -> `400 Bad Request`,
+* `IllegalStateException` -> `412 Precondition Failed`,
+* `FileUploadException` -> `400 Bad Request`.
+
+=== Documentation Concept
+
+Architecture documentation is maintained in arc42 AsciiDoc sources under `src/docs/asciidoc` and generated as a single PDF by Maven from `architecture.adoc`.

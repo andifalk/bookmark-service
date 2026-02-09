@@ -1,0 +1,18 @@
+@startuml
+actor Client
+participant "Spring Security\nFilter Chain" as Security
+participant "BookmarkRestController" as Controller
+participant "BookmarkService" as Service
+participant "CustomBookmarkEntityRepository" as Repo
+database "H2" as DB
+
+Client -> Security : GET /api/bookmarks?userid=...
+Security -> Controller : authenticated request
+Controller -> Service : findAllBookmarksByUser(userid)
+Service -> Repo : findAllBookmarksByUser(userid)
+Repo -> DB : native SQL query
+DB --> Repo : rows
+Repo --> Service : BookmarkEntity list
+Service --> Controller : Bookmark list
+Controller --> Client : 200 OK + JSON
+@enduml

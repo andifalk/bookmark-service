@@ -1,0 +1,40 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-runtime-view]]
+== Runtime View
+
+=== Scenario 1: Read Bookmarks of a User
+
+plantuml::images/06_runtime_find_bookmarks.puml[format=svg,align=center]
+
+Runtime flow:
+
+1. Client sends `GET /api/bookmarks?userid=USER_IDENTIFIER` with credentials.
+2. Spring Security authenticates request via configured filter chain.
+3. `BookmarkRestController` delegates to `BookmarkService.findAllBookmarksByUser`.
+4. `BookmarkService` calls `CustomBookmarkEntityRepository.findAllBookmarksByUser`.
+5. Repository executes native SQL against H2.
+6. Service maps entities to API model `Bookmark` and returns list.
+7. Controller serializes list to JSON with HTTP 200.
+
+Notable aspects:
+
+* Security is enforced at HTTP layer, not method-level authorization in service.
+* Query construction in custom repository uses string concatenation.
+
+=== Scenario 2: Upload Bookmarks from Excel
+
+plantuml::images/06_runtime_upload_bookmarks.puml[format=svg,align=center]
+
+Runtime flow:
+
+1. Client sends `POST /api/bookmarks/upload` with multipart file.
+2. `BookmarkRestController` forwards file to `BookmarkService.importBookmarks`.
+3. Service parses workbook using Apache POI.
+4. Rows are converted to `Bookmark` objects and persisted via `BookmarkEntityRepository`.
+5. Persisted entities are mapped back to API model and returned as JSON.
+
+Notable aspects:
+
+* The service trusts spreadsheet cell content and expected column order.
+* IOException is translated to `IllegalArgumentException` and handled by global `ErrorHandler`.

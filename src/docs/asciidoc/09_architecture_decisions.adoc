@@ -1,0 +1,34 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-design-decisions]]
+== Architecture Decisions
+
+[options="header",cols="1,1,2,2"]
+|===
+|ID |Decision |Rationale |Consequences
+
+|AD-01
+|Use a layered monolith (`api` -> `service` -> `data`)
+|Simple structure for a small service and easy architecture governance with ArchUnit.
+|Clear boundaries, but no independent deployment of subdomains.
+
+|AD-02
+|Use Spring Boot + Spring Security + Spring Data JPA
+|Mature ecosystem for fast delivery of REST endpoints, security setup and persistence.
+|Strong framework coupling and convention-driven architecture.
+
+|AD-03
+|Use in-memory H2 as runtime database
+|Fast local startup and deterministic integration tests without external dependencies.
+|Not representative for production-scale persistence characteristics.
+
+|AD-04
+|Keep insecure implementation aspects on `main` branch
+|Project goal is security training and verification; insecure behavior must be visible and testable.
+|Known vulnerabilities are intentionally present and must not be treated as accidental defects on this branch.
+
+|AD-05
+|Generate architecture documentation as part of Maven build
+|Ensures documentation is versioned, reviewable and reproducible in CI.
+|Any documentation syntax/config issue can fail build.
+|===

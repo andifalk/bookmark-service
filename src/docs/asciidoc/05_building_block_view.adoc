@@ -1,0 +1,106 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-building-block-view]]
+== Building Block View
+
+=== Whitebox Overall System
+
+plantuml::images/05_building_block_level1.puml[format=svg,align=center]
+
+Motivation::
+
+The implementation is organized as a classic layered architecture to separate transport, domain logic and persistence concerns and to make architecture/security tests enforceable.
+
+Contained Building Blocks::
+
+[cols="1,2" options="header"]
+|===
+|Name |Responsibility
+
+|API Layer (`com.example.bookmark.api`)
+|Expose HTTP endpoints for bookmarks and users, map requests/responses, and delegate to services.
+
+|Service Layer (`com.example.bookmark.service`)
+|Implement use cases, transactional boundaries, DTO-to-entity mapping and authentication user lookup.
+
+|Data Layer (`com.example.bookmark.data`)
+|Persist and query entities via Spring Data repositories and custom native SQL repositories.
+
+|Security Configuration (`com.example.bookmark.config`, `com.example.bookmark.security`)
+|Define security filter chain, CORS behavior and password encoding strategy.
+
+|Bootstrap (`com.example.bookmark.Application`, `com.example.bookmark.DataInitializer`)
+|Start Spring Boot application and initialize demo data outside test profile.
+|===
+
+Important Interfaces::
+
+* REST endpoints under `/api/bookmarks` and `/api/users`
+* `UserDetailsService` contract implemented by `BookmarkUserDetailsService`
+* JPA repositories `UserEntityRepository` and `BookmarkEntityRepository`
+
+==== API Layer
+
+Purpose/Responsibility::
+
+Provide externally visible REST contract and convert HTTP-level concerns to service calls.
+
+Interface(s)::
+
+`BookmarkRestController`, `UserRestController`, `MainRestController`, `ErrorHandler`.
+
+Directory/File Location::
+
+`src/main/java/com/example/bookmark/api`
+
+==== Service Layer
+
+Purpose/Responsibility::
+
+Coordinate business operations, transactions, mapping between API model and entities, and user lookup for authentication.
+
+Interface(s)::
+
+`BookmarkService`, `UserService`, `BookmarkUserDetailsService`, data transfer classes `Bookmark` and `User`.
+
+Directory/File Location::
+
+`src/main/java/com/example/bookmark/service`
+
+Open Issues/Problems/Risks::
+
+Public service operations are not consistently annotated with method-level authorization constraints.
+
+==== Data Layer
+
+Purpose/Responsibility::
+
+Persist and read `BookmarkEntity` and `UserEntity` from relational storage.
+
+Interface(s)::
+
+`UserEntityRepository`, `BookmarkEntityRepository`, `CustomUserEntityRepository`, `CustomBookmarkEntityRepository`.
+
+Directory/File Location::
+
+`src/main/java/com/example/bookmark/data`
+
+Open Issues/Problems/Risks::
+
+Custom repositories build SQL strings by concatenation.
+
+=== Level 2
+
+==== White Box Service Layer
+
+The service layer contains three main components:
+
+* `BookmarkService` for bookmark CRUD/search/import,
+* `UserService` for user CRUD/password operations,
+* `BookmarkUserDetailsService` adapter for Spring Security authentication.
+
+plantuml::images/05_building_block_level2_service.puml[format=svg,align=center]
+
+=== Level 3
+
+No additional level-3 decomposition is required for the current project size.

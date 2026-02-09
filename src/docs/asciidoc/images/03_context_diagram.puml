@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Browser / API Client" as client
+actor "Security Test Suite" as tests
+
+rectangle "Bookmark Service" as system {
+  [REST API\n/api/bookmarks\n/api/users] as api
+  [Swagger/OpenAPI\n/swagger-ui.html\n/v3/api-docs] as docs
+  [Actuator Endpoints] as actuator
+}
+
+database "H2 In-Memory DB" as db
+
+client --> api : HTTP JSON + Auth
+client --> docs : HTTP GET
+tests --> api : Automated test requests
+api --> db : JPA / SQL
+client --> actuator : HTTP GET
+@enduml

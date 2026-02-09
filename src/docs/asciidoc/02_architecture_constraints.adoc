@@ -1,0 +1,45 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-architecture-constraints]]
+== Architecture Constraints
+
+[options="header",cols="1,1,3"]
+|===
+|Type |Constraint |Rationale and Impact
+
+|Technical
+|Java 21 and Spring Boot 3.3
+|Implementation must remain compatible with modern Spring Boot baseline and Jakarta namespace migration.
+
+|Technical
+|Maven build pipeline
+|All architecture artifacts (including PDF docs) are generated through Maven (`generate-resources`) to keep CI integration simple.
+
+|Technical
+|In-memory H2 database
+|No external DB dependency for local runs and tests; persistence design favors compatibility with H2.
+
+|Technical
+|Layered package structure (`api`, `service`, `data`)
+|Architecture tests enforce strict dependencies between layers.
+
+|Technical
+|Spring Security filter chain
+|Application-wide authentication is centralized in `WebSecurityConfiguration`.
+
+|Technical
+|OpenAPI via springdoc
+|REST API must remain discoverable through generated docs and Swagger UI.
+
+|Organizational
+|Main branch intentionally insecure
+|Some choices are intentionally weak to support security training and failing/passing security checks.
+
+|Organizational
+|Automated security verification
+|ArchUnit, security-focused unit/integration tests, SpotBugs, Dependency Check and SBOM generation are part of quality gates.
+
+|Convention
+|arc42 documentation structure
+|Architecture documentation follows arc42 template sections and is versioned with source code.
+|===

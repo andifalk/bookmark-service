@@ -1,0 +1,19 @@
+@startuml
+actor User
+participant "SecurityFilterChain" as Chain
+participant "BookmarkUserDetailsService" as UDS
+participant "UserService" as UserService
+participant "CustomUserEntityRepository" as UserRepo
+database H2
+
+User -> Chain : HTTP request + Basic credentials
+Chain -> UDS : loadUserByUsername(email)
+UDS -> UserService : findUserByEmail(email)
+UserService -> UserRepo : native SQL by email
+UserRepo -> H2 : SELECT user_entity
+H2 --> UserRepo : user row
+UserRepo --> UserService : UserEntity
+UserService --> UDS : UserDetails
+UDS --> Chain : authenticated principal
+Chain --> User : proceeds to controller
+@enduml

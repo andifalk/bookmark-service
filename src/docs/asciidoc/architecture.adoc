@@ -1,0 +1,59 @@
+// configure EN settings for asciidoc
+include::config.adoc[]
+
+= Bookmark Service Architecture Documentation
+:revnumber: 1.0
+:revdate: 2026-02-09
+:revremark: arc42 documentation for the current codebase
+:toc-title: Table of Contents
+
+// numbering from here on
+:numbered:
+
+<<<<
+// 1. Introduction and Goals
+include::01_introduction_and_goals.adoc[]
+
+<<<<
+// 2. Architecture Constraints
+include::02_architecture_constraints.adoc[]
+
+<<<<
+// 3. Context and Scope
+include::03_context_and_scope.adoc[]
+
+<<<<
+// 4. Solution Strategy
+include::04_solution_strategy.adoc[]
+
+<<<<
+// 5. Building Block View
+include::05_building_block_view.adoc[]
+
+<<<<
+// 6. Runtime View
+include::06_runtime_view.adoc[]
+
+<<<<
+// 7. Deployment View
+include::07_deployment_view.adoc[]
+
+<<<<
+// 8. Concepts
+include::08_concepts.adoc[]
+
+<<<<
+// 9. Architecture Decisions
+include::09_architecture_decisions.adoc[]
+
+<<<<
+// 10. Quality Requirements
+include::10_quality_requirements.adoc[]
+
+<<<<
+// 11. Technical Risks
+include::11_technical_risks.adoc[]
+
+<<<<
+// 12. Glossary
+include::12_glossary.adoc[]

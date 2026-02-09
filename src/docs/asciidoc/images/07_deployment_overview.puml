@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+
+node "Developer Machine / CI Agent" {
+  node "JVM (Java 21)" {
+    artifact "bookmark-service.jar\nSpring Boot App" as app
+  }
+
+  database "H2 In-Memory DB" as h2
+}
+
+node "Client" as client
+node "Test Runner" as tests
+
+client --> app : HTTP :9090
+tests --> app : integration tests
+app --> h2 : JDBC / Hibernate
+@enduml

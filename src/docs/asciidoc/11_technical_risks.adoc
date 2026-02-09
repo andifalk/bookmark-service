@@ -1,0 +1,37 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-technical-risks]]
+== Risks and Technical Debts
+
+[options="header",cols="1,2,3"]
+|===
+|Priority |Risk / Debt |Mitigation
+
+|High
+|Weak password hashing (`MD5PasswordEncoder`) and insecure password lifecycle.
+|Replace with adaptive password hashing (e.g. BCrypt/Argon2), enforce password policy, and remove password values from logs.
+
+|High
+|Missing object-level authorization in service operations can allow access to foreign user/bookmark data.
+|Introduce method-level authorization (`@PreAuthorize`) and ownership checks in service layer.
+
+|High
+|Custom repositories and search use SQL string concatenation.
+|Switch to parameterized queries/JPA criteria and avoid dynamic SQL concatenation.
+
+|Medium
+|CORS is broadly open (`*`) with credentials allowed.
+|Restrict origins, methods and headers per environment.
+
+|Medium
+|CSRF is disabled globally while form login is enabled.
+|Enable CSRF for browser flows or strictly separate stateless API security.
+
+|Medium
+|Actuator endpoints are publicly accessible.
+|Restrict exposure and require authentication/authorization for sensitive endpoints.
+
+|Low
+|Input validation annotations are sparse on entities and controller DTOs.
+|Add Bean Validation constraints to request models and entity fields where applicable.
+|===

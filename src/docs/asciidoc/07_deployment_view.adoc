@@ -1,0 +1,47 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[[section-deployment-view]]
+== Deployment View
+
+=== Infrastructure Level 1
+
+plantuml::images/07_deployment_overview.puml[format=svg,align=center]
+
+Motivation::
+
+The deployment is intentionally simple for local development, security training and CI execution.
+
+Quality and/or Performance Features::
+
+* zero external runtime dependencies (in-memory H2),
+* fast startup and teardown,
+* reproducible test execution in isolated process.
+
+Mapping of Building Blocks to Infrastructure::
+
+[options="header",cols="1,2"]
+|===
+|Infrastructure Element |Mapped Building Blocks
+
+|Spring Boot JVM process
+|`api`, `service`, `data`, `config`, `security`, `DataInitializer`
+
+|In-memory H2 database (same process)
+|`UserEntity`, `BookmarkEntity` tables via JPA/Hibernate
+
+|HTTP clients (browser/httpie/tests)
+|Invoke REST API and Swagger/OpenAPI endpoints on port `9090`
+|===
+
+=== Infrastructure Level 2
+
+==== Runtime Node: Spring Boot Application
+
+* Container/Process: Java 21 process launched by Spring Boot.
+* Exposed interfaces: REST API, Swagger UI, OpenAPI docs, actuator endpoints.
+* Internal integrations: embedded servlet container, Spring Security filter chain, JPA/Hibernate, H2 datasource.
+
+==== Runtime Node: H2 In-Memory Database
+
+* Lifecycle is bound to application process.
+* Used for all persistence and integration tests unless overridden by test configuration.
